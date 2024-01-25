@@ -38,6 +38,7 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export default function Home() {
     const [apiKey] = useLocalStorage("openai-api-key", "");
@@ -97,14 +98,21 @@ export default function Home() {
                             disabled={!apiKey}
                         />
                     </ClientOnly>
-                    <Button
-                        type="submit"
-                        disabled={!input || !apiKey}
-                        className="shrink-0"
-                        aria-label="Send message"
-                    >
-                        <ArrowUpIcon />
-                    </Button>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    type="submit"
+                                    disabled={!input || !apiKey}
+                                    className="shrink-0"
+                                    aria-label="Send message"
+                                >
+                                    <ArrowUpIcon />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Send message</TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                 </div>
             </form>
         </div>
@@ -129,23 +137,30 @@ function Settings() {
 
     return (
         <Modal>
-            <ModalTrigger asChild>
-                <Button
-                    variant="outline"
-                    className="relative w-12 shrink-0"
-                    aria-label="Set API key"
-                >
-                    <GearIcon />
-                    <ClientOnly>
-                        {!apiKey && (
-                            <>
-                                <span className="absolute -right-1 -top-1 inline-flex h-3 w-3 animate-ping rounded-full bg-sky-400 opacity-75" />
-                                <span className="absolute -right-1 -top-1 inline-flex h-3 w-3 rounded-full bg-sky-500" />
-                            </>
-                        )}
-                    </ClientOnly>
-                </Button>
-            </ModalTrigger>
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <ModalTrigger asChild>
+                            <Button
+                                variant="outline"
+                                className="relative w-12 shrink-0"
+                                aria-label="Set API key"
+                            >
+                                <GearIcon />
+                                <ClientOnly>
+                                    {!apiKey && (
+                                        <>
+                                            <span className="absolute -right-1 -top-1 inline-flex h-3 w-3 animate-ping rounded-full bg-sky-400 opacity-75" />
+                                            <span className="absolute -right-1 -top-1 inline-flex h-3 w-3 rounded-full bg-sky-500" />
+                                        </>
+                                    )}
+                                </ClientOnly>
+                            </Button>
+                        </ModalTrigger>
+                    </TooltipTrigger>
+                    <TooltipContent>Settings</TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
             <ModalContent>
                 <ModalHeader>
                     <ModalTitle>Settings</ModalTitle>
