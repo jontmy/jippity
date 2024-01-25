@@ -4,9 +4,10 @@ import { type ReactNode } from "react";
 
 type ClientOnlyProps = {
     children: ReactNode;
+    fallback?: ReactNode;
 };
 
-export function ClientOnly({ children }: ClientOnlyProps) {
+export function ClientOnly(props: ClientOnlyProps) {
     const isClient = useIsClient();
-    return isClient ? <>{children}</> : null;
+    return isClient ? <>{props.children}</> : props.fallback ?? null;
 }
