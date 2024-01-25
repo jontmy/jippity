@@ -44,6 +44,8 @@
         "@tailwindcss/container-queries": "^0.1.1",
         "@typescript-eslint/eslint-plugin": "^6.19.1",
         "@typescript-eslint/parser": "^6.19.1",
+        "@vercel/analytics": "^1.1.2",
+        "@vercel/speed-insights": "^1.0.7",
         "ai": "^2.2.31",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.0",
