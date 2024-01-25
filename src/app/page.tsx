@@ -211,7 +211,7 @@ function Settings() {
                             <br />
                             {gptModel?.includes("3.5") && (
                                 <span>
-                                    GPT-3.5 Turbo is free to use on on{" "}
+                                    GPT-3.5 Turbo is free to use on{" "}
                                     <a
                                         href="https://chat.openai.com"
                                         target="_blank"
