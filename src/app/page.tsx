@@ -86,10 +86,10 @@ export default function Home() {
                 className="fixed bottom-6 left-0 flex w-full items-center justify-center px-6 sm:px-8"
             >
                 <div className="flex w-full max-w-prose grow gap-2">
-                    <ClientOnly fallback={<Skeleton className="h-9 w-12" />}>
+                    <ClientOnly fallback={<Skeleton className="h-10 w-12 shrink-0 md:h-9" />}>
                         <Settings />
                     </ClientOnly>
-                    <ClientOnly fallback={<Skeleton className="h-9 w-full" />}>
+                    <ClientOnly fallback={<Skeleton className="h-10 w-full md:h-9" />}>
                         <Input
                             value={input}
                             placeholder="Say something..."
@@ -104,7 +104,7 @@ export default function Home() {
                                 <Button
                                     type="submit"
                                     disabled={!input || !apiKey}
-                                    className="shrink-0"
+                                    className="h-10 shrink-0 md:h-9"
                                     aria-label="Send message"
                                 >
                                     <ArrowUpIcon />
@@ -143,7 +143,7 @@ function Settings() {
                         <ModalTrigger asChild>
                             <Button
                                 variant="outline"
-                                className="relative w-12 shrink-0"
+                                className="relative h-10 w-12 shrink-0 md:h-9"
                                 aria-label="Set API key"
                             >
                                 <GearIcon />
