@@ -4,6 +4,7 @@ import { z } from "zod";
 export const env = createEnv({
     server: {},
     client: {
+        NEXT_PUBLIC_GOOGLE_SEARCH_CONSOLE_TAG: z.string().min(1),
         NEXT_PUBLIC_OPENAI_GPT_MODELS: z
             .string()
             .min(1)
@@ -12,13 +13,14 @@ export const env = createEnv({
                 z
                     .object({
                         name: z.string().min(1),
-                        model: z.string().min(1),
+                        model: z.string().min(1)
                     })
                     .array()
-                    .parse(s),
-            ),
+                    .parse(s)
+            )
     },
     runtimeEnv: {
-        NEXT_PUBLIC_OPENAI_GPT_MODELS: process.env.NEXT_PUBLIC_OPENAI_GPT_MODELS,
-    },
+        NEXT_PUBLIC_GOOGLE_SEARCH_CONSOLE_TAG: process.env.NEXT_PUBLIC_GOOGLE_SEARCH_CONSOLE_TAG,
+        NEXT_PUBLIC_OPENAI_GPT_MODELS: process.env.NEXT_PUBLIC_OPENAI_GPT_MODELS
+    }
 });

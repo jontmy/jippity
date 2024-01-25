@@ -4,6 +4,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { env } from "@/env";
 
 export const runtime = "edge";
 
@@ -24,6 +27,9 @@ const satoshi = localFont({
 export const metadata: Metadata = {
     title: "Jippity",
     description: "Chat with GPT-4. Supply your own API key.",
+    verification: {
+        google: env.NEXT_PUBLIC_GOOGLE_SEARCH_CONSOLE_TAG,
+    },
 };
 
 type RootLayoutProps = Readonly<{
@@ -38,6 +44,8 @@ export default function RootLayout(props: RootLayoutProps) {
                     {props.children}
                     <Toaster />
                 </main>
+                <Analytics />
+                <SpeedInsights />
             </body>
         </html>
     );
