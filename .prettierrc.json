@@ -1,0 +1,12 @@
+{
+  "printWidth": 100,
+  "tabWidth": 4,
+  "quoteProps": "consistent",
+  "plugins": [
+    "prettier-plugin-tailwindcss"
+  ],
+  "tailwindFunctions": [
+    "clsx",
+    "cn"
+  ]
+}
