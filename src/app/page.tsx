@@ -3,7 +3,7 @@
 import { useChat } from "ai/react";
 import { Button } from "@/components/ui/button";
 import { ArrowUpIcon, GearIcon } from "@radix-ui/react-icons";
-import { useLocalStorage } from "@uidotdev/usehooks";
+import { useLocalStorage } from "usehooks-ts";
 import { Input } from "@/components/ui/input";
 import { Bot, User } from "lucide-react";
 import {
@@ -17,6 +17,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
+import { ClientOnly } from "@/components/client-only";
 
 export default function Home() {
     const [apiKey, setApiKey] = useLocalStorage("openai-api-key", "");
@@ -29,15 +30,17 @@ export default function Home() {
     return (
         <div className="relative flex w-full max-w-prose grow flex-col justify-between">
             <div className="flex flex-col gap-6 pb-16">
-                {!apiKey && (
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 text-sm font-semibold">
-                            <Bot size={20} />
-                            System
+                <ClientOnly>
+                    {!apiKey && (
+                        <div className="flex flex-col gap-2">
+                            <div className="flex items-center gap-2 text-sm font-semibold">
+                                <Bot size={20} />
+                                System
+                            </div>
+                            <p className="whitespace-pre-wrap">Please set an API key.</p>
                         </div>
-                        <p className="whitespace-pre-wrap">Please set an API key.</p>
-                    </div>
-                )}
+                    )}
+                </ClientOnly>
                 {messages.map((m) => (
                     <div className="flex flex-col gap-2" key={m.id}>
                         <div className="flex items-center gap-2 text-sm font-semibold">
@@ -57,12 +60,14 @@ export default function Home() {
                         <DialogTrigger asChild>
                             <Button variant="outline" className="relative">
                                 <GearIcon />
-                                {!apiKey && (
-                                    <>
-                                        <span className="absolute -right-1 -top-1 inline-flex h-3 w-3 animate-ping rounded-full bg-sky-400 opacity-75" />
-                                        <span className="absolute -right-1 -top-1 inline-flex h-3 w-3 rounded-full bg-sky-500" />
-                                    </>
-                                )}
+                                <ClientOnly>
+                                    {!apiKey && (
+                                        <>
+                                            <span className="absolute -right-1 -top-1 inline-flex h-3 w-3 animate-ping rounded-full bg-sky-400 opacity-75" />
+                                            <span className="absolute -right-1 -top-1 inline-flex h-3 w-3 rounded-full bg-sky-500" />
+                                        </>
+                                    )}
+                                </ClientOnly>
                             </Button>
                         </DialogTrigger>
                         <DialogContent>
