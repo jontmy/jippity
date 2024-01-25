@@ -28,7 +28,7 @@ export default function Home() {
     });
     return (
         <div className="relative flex w-full max-w-prose grow flex-col justify-between">
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 pb-16">
                 {!apiKey && (
                     <div className="flex flex-col gap-2">
                         <div className="flex items-center gap-2 text-sm font-semibold">
