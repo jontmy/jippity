@@ -59,7 +59,7 @@ export default function Home() {
                 <div className="flex w-full max-w-prose grow gap-2">
                     <Dialog>
                         <DialogTrigger asChild>
-                            <Button variant="outline" className="relative">
+                            <Button variant="outline" className="relative" aria-label="Set API key">
                                 <GearIcon />
                                 <ClientOnly>
                                     {!apiKey && (
@@ -104,7 +104,12 @@ export default function Home() {
                             disabled={!apiKey}
                         />
                     </ClientOnly>
-                    <Button type="submit" disabled={!input || !apiKey} className="shrink-0">
+                    <Button
+                        type="submit"
+                        disabled={!input || !apiKey}
+                        className="shrink-0"
+                        aria-label="Send message"
+                    >
                         <ArrowUpIcon />
                     </Button>
                 </div>
