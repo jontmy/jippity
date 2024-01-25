@@ -54,7 +54,7 @@ export default function Home() {
     });
     return (
         <div className="relative flex w-full max-w-prose grow flex-col justify-between">
-            <div className="flex flex-col gap-6 pb-16">
+            <div className="scroller flex flex-col gap-6 pb-10">
                 <ClientOnly>
                     {!apiKey && (
                         <div className="flex flex-col gap-2">
@@ -80,6 +80,7 @@ export default function Home() {
                         <p className="whitespace-pre-wrap">{m.content}</p>
                     </div>
                 ))}
+                <div className="scroller-anchor" />
             </div>
             <form
                 onSubmit={handleSubmit}

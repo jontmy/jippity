@@ -71,7 +71,17 @@
         @apply border-border;
         min-width: 0;
     }
+
     body {
         @apply bg-background text-foreground;
+    }
+
+    .scroller * {
+        overflow-anchor: none;
+    }
+
+    .scroller-anchor {
+        overflow-anchor: auto;
+        height: 1px;
     }
 }
