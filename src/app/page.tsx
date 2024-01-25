@@ -2,13 +2,25 @@
 
 import { useChat } from "ai/react";
 import { Button } from "@/components/ui/button";
-import { ArrowUpIcon } from "@radix-ui/react-icons";
+import { ArrowUpIcon, GearIcon } from "@radix-ui/react-icons";
+import { useLocalStorage } from "@uidotdev/usehooks";
 import { Input } from "@/components/ui/input";
 import { Bot, User } from "lucide-react";
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 import { useState } from "react";
 
 export default function Home() {
-    const [apiKey, setApiKey] = useState("");
+    const [apiKey, setApiKey] = useLocalStorage("openai-api-key", "");
+    const [apiKeyInput, setApiKeyInput] = useState(apiKey);
     const { messages, input, handleInputChange, handleSubmit } = useChat({
         body: {
             apiKey,
@@ -17,13 +29,22 @@ export default function Home() {
     return (
         <div className="relative flex w-full max-w-prose grow flex-col justify-between">
             <div className="flex flex-col gap-6">
+                {!apiKey && (
+                    <div className="flex flex-col gap-2">
+                        <div className="flex items-center gap-2 text-sm font-semibold">
+                            <Bot size={20} />
+                            System
+                        </div>
+                        <p className="whitespace-pre-wrap">Please set an API key.</p>
+                    </div>
+                )}
                 {messages.map((m) => (
                     <div className="flex flex-col gap-2" key={m.id}>
                         <div className="flex items-center gap-2 text-sm font-semibold">
                             {m.role === "user" ? <User size={20} /> : <Bot size={20} />}
-                            {m.role === "user" ? "You" : "GPT"}
+                            {m.role === "user" ? "You" : "GPT-4"}
                         </div>
-                        <div className="whitespace-pre-wrap">{m.content}</div>
+                        <p className="whitespace-pre-wrap">{m.content}</p>
                     </div>
                 ))}
             </div>
@@ -31,19 +52,49 @@ export default function Home() {
                 onSubmit={handleSubmit}
                 className="fixed bottom-6 left-0 flex w-full items-center justify-center px-6 sm:px-8"
             >
-                <div className="grid w-full max-w-prose grow grid-cols-[1fr,auto] gap-2">
-                    <Input
-                        value={apiKey}
-                        type="password"
-                        placeholder="OpenAI API key"
-                        onChange={(e) => setApiKey(e.target.value)}
-                        className="col-span-full w-1/2 bg-white text-xs placeholder:text-sm"
-                    />
+                <div className="flex w-full max-w-prose grow gap-2">
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant="outline" className="relative">
+                                <GearIcon />
+                                {!apiKey && (
+                                    <>
+                                        <span className="absolute -right-1 -top-1 inline-flex h-3 w-3 animate-ping rounded-full bg-sky-400 opacity-75" />
+                                        <span className="absolute -right-1 -top-1 inline-flex h-3 w-3 rounded-full bg-sky-500" />
+                                    </>
+                                )}
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Set your OpenAI API key</DialogTitle>
+                                <DialogDescription>
+                                    Your API key will be stored on your browser and only used to
+                                    send your messages to OpenAI's GPT. We will never store your API
+                                    key on our servers.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <Input
+                                placeholder="Paste your API key here"
+                                value={apiKeyInput}
+                                onChange={(e) => setApiKeyInput(e.target.value)}
+                            />
+                            <DialogFooter>
+                                <DialogClose>
+                                    <Button variant="outline">Cancel</Button>
+                                </DialogClose>
+                                <DialogClose>
+                                    <Button onClick={() => setApiKey(apiKeyInput)}>Save</Button>
+                                </DialogClose>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
                     <Input
                         value={input}
                         placeholder="Say something..."
                         onChange={handleInputChange}
                         className="bg-white"
+                        disabled={!apiKey}
                     />
                     <Button type="submit" disabled={!input || !apiKey} className="shrink-0">
                         <ArrowUpIcon />
