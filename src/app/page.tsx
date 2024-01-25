@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import { ClientOnly } from "@/components/client-only";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
     const [apiKey, setApiKey] = useLocalStorage("openai-api-key", "");
@@ -94,13 +95,15 @@ export default function Home() {
                             </DialogFooter>
                         </DialogContent>
                     </Dialog>
-                    <Input
-                        value={input}
-                        placeholder="Say something..."
-                        onChange={handleInputChange}
-                        className="bg-white"
-                        disabled={!apiKey}
-                    />
+                    <ClientOnly fallback={<Skeleton className="h-9 w-full" />}>
+                        <Input
+                            value={input}
+                            placeholder="Say something..."
+                            onChange={handleInputChange}
+                            className="bg-white"
+                            disabled={!apiKey}
+                        />
+                    </ClientOnly>
                     <Button type="submit" disabled={!input || !apiKey} className="shrink-0">
                         <ArrowUpIcon />
                     </Button>
