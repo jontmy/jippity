@@ -26,7 +26,7 @@ const satoshi = localFont({
 
 export const metadata: Metadata = {
     title: "Jippity",
-    description: "Chat with GPT-4. Supply your own API key.",
+    description: "Chat with GPT-4. Bring your own API key.",
     verification: {
         google: env.NEXT_PUBLIC_GOOGLE_SEARCH_CONSOLE_TAG,
     },
