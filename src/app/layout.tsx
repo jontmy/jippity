@@ -3,6 +3,7 @@ import { type ReactNode } from "react";
 import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 
 export const runtime = "edge";
 
@@ -32,9 +33,10 @@ type RootLayoutProps = Readonly<{
 export default function RootLayout(props: RootLayoutProps) {
     return (
         <html lang="en">
-            <body className={cn("overflow-x-clip bg-muted", satoshi.className)}>
-                <main className="flex min-h-screen flex-col items-center gap-6 p-6 sm:p-8">
+            <body className={cn("overflow-x-clip bg-muted", satoshi.className, satoshi.variable)}>
+                <main className="flex min-h-screen flex-col items-center gap-6 p-6 font-sans sm:p-8">
                     {props.children}
+                    <Toaster />
                 </main>
             </body>
         </html>

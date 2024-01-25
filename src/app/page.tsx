@@ -16,16 +16,29 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
 import { ClientOnly } from "@/components/client-only";
 import { Skeleton } from "@/components/ui/skeleton";
+import { env } from "@/env";
+import { Label } from "@/components/ui/label";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { toast } from "sonner";
 
 export default function Home() {
     const [apiKey, setApiKey] = useLocalStorage("openai-api-key", "");
-    const [apiKeyInput, setApiKeyInput] = useState(apiKey);
+    const [gptModel, setGptModel] = useLocalStorage(
+        "openai-gpt-model",
+        env.NEXT_PUBLIC_OPENAI_GPT_MODELS[0]?.model,
+    );
     const { messages, input, handleInputChange, handleSubmit } = useChat({
         body: {
             apiKey,
+            model: gptModel,
         },
     });
     return (
@@ -46,7 +59,12 @@ export default function Home() {
                     <div className="flex flex-col gap-2" key={m.id}>
                         <div className="flex items-center gap-2 text-sm font-semibold">
                             {m.role === "user" ? <User size={20} /> : <Bot size={20} />}
-                            {m.role === "user" ? "You" : "GPT-4"}
+                            {m.role === "user"
+                                ? "You"
+                                : m.name ??
+                                  env.NEXT_PUBLIC_OPENAI_GPT_MODELS.find(
+                                      (m) => m.model === gptModel,
+                                  )?.name}
                         </div>
                         <p className="whitespace-pre-wrap">{m.content}</p>
                     </div>
@@ -73,24 +91,76 @@ export default function Home() {
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
-                                <DialogTitle>Set your OpenAI API key</DialogTitle>
-                                <DialogDescription>
-                                    Your API key will be stored on your browser and only used to
-                                    send your messages to OpenAI's GPT. We will never store your API
-                                    key on our servers.
-                                </DialogDescription>
+                                <DialogTitle>Settings</DialogTitle>
                             </DialogHeader>
-                            <Input
-                                placeholder="Paste your API key here"
-                                value={apiKeyInput}
-                                onChange={(e) => setApiKeyInput(e.target.value)}
-                            />
+                            <div className="flex flex-col gap-8 py-3">
+                                <div className="flex flex-col">
+                                    <Label className="pb-2.5 pl-0.5">OpenAI API Key</Label>
+                                    <Input
+                                        placeholder="Paste your API key here"
+                                        value={apiKey}
+                                        onChange={(e) => {
+                                            setApiKey(e.target.value);
+                                            toast.success("Changes saved.");
+                                        }}
+                                    />
+                                    <DialogDescription className="pl-0.5 pt-2.5 text-xs font-medium">
+                                        We will never store your API key on our servers.
+                                    </DialogDescription>
+                                    <DialogDescription className="pl-0.5 pt-1 text-xs">
+                                        Your API key is saved in your browser and only used to send
+                                        your messages to the OpenAI GPT model.
+                                    </DialogDescription>
+                                </div>
+                                <div className="flex flex-col">
+                                    <Label className="pb-2.5 pl-0.5">GPT Model</Label>
+                                    <Select
+                                        defaultValue={gptModel}
+                                        onValueChange={(v) => {
+                                            setGptModel(v);
+                                            toast.success("Changes saved.");
+                                        }}
+                                    >
+                                        <SelectTrigger className="w-[180px]">
+                                            <SelectValue placeholder="Choose a model" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {env.NEXT_PUBLIC_OPENAI_GPT_MODELS.map(
+                                                ({ name, model }) => {
+                                                    return (
+                                                        <SelectItem value={model} key={model}>
+                                                            {name}
+                                                        </SelectItem>
+                                                    );
+                                                },
+                                            )}
+                                        </SelectContent>
+                                    </Select>
+                                    <DialogDescription
+                                        className="pl-0.5 pt-2.5 text-xs"
+                                        rel="noreferrer"
+                                    >
+                                        Your choice will be saved for all new and future chats.
+                                        <br />
+                                        {gptModel?.includes("3.5") && (
+                                            <span>
+                                                GPT-3.5 Turbo is free to use on on{" "}
+                                                <a
+                                                    href="https://chat.openai.com"
+                                                    target="_blank"
+                                                    className="underline"
+                                                >
+                                                    chat.openai.com
+                                                </a>
+                                                .
+                                            </span>
+                                        )}
+                                    </DialogDescription>
+                                </div>
+                            </div>
                             <DialogFooter>
-                                <DialogClose>
-                                    <Button variant="outline">Cancel</Button>
-                                </DialogClose>
-                                <DialogClose>
-                                    <Button onClick={() => setApiKey(apiKeyInput)}>Save</Button>
+                                <DialogClose asChild>
+                                    <Button>Close</Button>
                                 </DialogClose>
                             </DialogFooter>
                         </DialogContent>
