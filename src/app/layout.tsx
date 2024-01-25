@@ -48,7 +48,7 @@ export default function RootLayout(props: RootLayoutProps) {
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <div className="grid min-h-screen grid-cols-1 justify-center font-sans md:grid-cols-[theme(width.72),1fr]">
+                    <div className="grid h-screen grid-cols-1 justify-center font-sans md:grid-cols-[theme(width.72),1fr]">
                         <div className="hidden flex-col gap-6 bg-zinc-900 p-4 sm:p-6 md:flex">
                             <p className="text-2xl font-black tracking-tight text-white">
                                 Jippity.
@@ -57,7 +57,7 @@ export default function RootLayout(props: RootLayoutProps) {
                             <div className="grow" />
                             <ModeToggle className="border-zinc-700 bg-zinc-800 text-zinc-50" />
                         </div>
-                        <main className="relative flex w-full flex-col items-center gap-6 bg-zinc-50 p-6 dark:bg-zinc-800 sm:p-8">
+                        <main className="relative flex w-full flex-col items-center gap-6 overflow-y-auto bg-zinc-50 p-6 dark:bg-zinc-800 sm:p-8">
                             {props.children}
                         </main>
                         <Toaster />

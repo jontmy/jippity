@@ -53,8 +53,8 @@ export default function Home() {
         },
     });
     return (
-        <div className="relative flex w-full max-w-prose grow flex-col justify-between">
-            <div className="scroller flex flex-col gap-6 pb-10">
+        <div className="flex w-full max-w-prose grow flex-col justify-between gap-4">
+            <div className="scroller flex flex-col gap-6">
                 <ClientOnly>
                     {!apiKey && (
                         <div className="flex flex-col gap-2">
@@ -84,7 +84,7 @@ export default function Home() {
             </div>
             <form
                 onSubmit={handleSubmit}
-                className="absolute bottom-0 left-0 flex w-full items-center justify-center px-6 sm:px-8"
+                className="flex w-full items-center justify-center px-6 sm:px-8"
             >
                 <div className="flex w-full max-w-prose grow gap-2">
                     <ClientOnly fallback={<Skeleton className="h-10 w-12 shrink-0 md:h-9" />}>
