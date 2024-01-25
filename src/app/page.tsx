@@ -84,7 +84,7 @@ export default function Home() {
             </div>
             <form
                 onSubmit={handleSubmit}
-                className="fixed bottom-6 left-0 flex w-full items-center justify-center px-6 sm:px-8"
+                className="absolute bottom-0 left-0 flex w-full items-center justify-center px-6 sm:px-8"
             >
                 <div className="flex w-full max-w-prose grow gap-2">
                     <ClientOnly fallback={<Skeleton className="h-10 w-12 shrink-0 md:h-9" />}>
@@ -95,7 +95,7 @@ export default function Home() {
                             value={input}
                             placeholder="Say something..."
                             onChange={handleInputChange}
-                            className="bg-white"
+                            className="bg-white dark:bg-zinc-700"
                             disabled={!apiKey}
                         />
                     </ClientOnly>
@@ -105,7 +105,7 @@ export default function Home() {
                                 <Button
                                     type="submit"
                                     disabled={!input || !apiKey}
-                                    className="h-10 shrink-0 md:h-9"
+                                    className="h-10 shrink-0 bg-zinc-900 text-zinc-50 transition-all dark:bg-zinc-100 dark:text-zinc-950 md:h-9"
                                     aria-label="Send message"
                                 >
                                     <ArrowUpIcon />
@@ -144,7 +144,7 @@ function Settings() {
                         <ModalTrigger asChild>
                             <Button
                                 variant="outline"
-                                className="relative h-10 w-12 shrink-0 md:h-9"
+                                className="relative h-10 w-12 shrink-0 dark:bg-zinc-700/50 hover:dark:bg-zinc-700 md:h-9"
                                 aria-label="Set API key"
                             >
                                 <GearIcon />
