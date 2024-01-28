@@ -1,4 +1,4 @@
-import { signOut } from "@/app/sign-out/actions";
+import { signOut } from "@/app/(auth)/sign-out/actions";
 
 export default function Page() {
     return (
