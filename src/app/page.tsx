@@ -58,7 +58,7 @@ export default function Home() {
         ) {
             setGptModel(env.NEXT_PUBLIC_OPENAI_GPT_MODELS[0]?.model);
         }
-    }, []);
+    }, [gptModel, setGptModel]);
     const { messages, input, handleInputChange, handleSubmit } = useChat({
         body: {
             apiKey,
