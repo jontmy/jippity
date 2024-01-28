@@ -52,13 +52,13 @@ export default function Page() {
     const ModalClose = matches ? DialogClose : DrawerClose;
 
     return (
-        <ClientOnly>
-            <Modal defaultOpen onOpenChange={() => router.back()}>
-                <ModalContent>
-                    <ModalHeader>
-                        <ModalTitle>Settings</ModalTitle>
-                    </ModalHeader>
-                    <div className="flex flex-col gap-8 px-4 py-3 md:px-0">
+        <Modal defaultOpen onOpenChange={() => router.back()}>
+            <ModalContent>
+                <ModalHeader>
+                    <ModalTitle>Settings</ModalTitle>
+                </ModalHeader>
+                <div className="flex flex-col gap-8 px-4 py-3 md:px-0">
+                    <ClientOnly>
                         <div className="flex flex-col">
                             <Label className="pb-2.5 pl-0.5">OpenAI API Key</Label>
                             <Input
@@ -117,14 +117,14 @@ export default function Page() {
                                 )}
                             </ModalDescription>
                         </div>
-                    </div>
-                    <ModalFooter>
-                        <ModalClose asChild>
-                            <Button>Close</Button>
-                        </ModalClose>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
-        </ClientOnly>
+                    </ClientOnly>
+                </div>
+                <ModalFooter>
+                    <ModalClose asChild>
+                        <Button>Close</Button>
+                    </ModalClose>
+                </ModalFooter>
+            </ModalContent>
+        </Modal>
     );
 }

@@ -70,7 +70,7 @@ export default function RootLayout(props: RootLayoutProps) {
                     disableTransitionOnChange
                 >
                     <div className="grid h-full grid-cols-1 justify-center font-sans md:grid-cols-[theme(width.72),1fr]">
-                        <aside className="hidden flex-col gap-6 bg-zinc-900 p-4 sm:p-6 md:flex">
+                        <aside className="hidden flex-col gap-6 bg-zinc-900 p-4 pb-6 sm:p-6 sm:pb-8 md:flex">
                             {props.sidebar}
                         </aside>
                         <main className="relative flex w-full flex-col items-center gap-6 overflow-y-auto bg-zinc-50 p-6 dark:bg-zinc-800 sm:p-8">

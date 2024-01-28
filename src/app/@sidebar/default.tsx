@@ -1,12 +1,52 @@
-import { ModeToggle } from "@/components/mode-toggle";
+import { ModeToggle } from "@/app/@sidebar/mode-toggle";
+import { auth, signOut } from "@/lib/auth";
+import { Show } from "@/components/show";
+import { UserAvatar } from "@/components/user-avatar";
+import { Button } from "@/components/ui/button";
+import { LogOut } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
-export default function Default() {
+export default async function Default() {
+    const { user } = await auth();
     return (
         <>
-            <p className="text-2xl font-black tracking-tight text-white">Jippity.</p>
+            <Link href="/" className="text-2xl font-black tracking-tight text-white">
+                Jippity.
+            </Link>
             <p className="text-sm text-zinc-50">Chat history coming soon!</p>
             <div className="grow" />
-            <ModeToggle className="border-zinc-700 bg-zinc-800 text-zinc-50" />
+            <Show when={user} as="div" className="flex items-center gap-4">
+                <UserAvatar user={user!} className="size-12 text-zinc-200 *:bg-zinc-700" />
+                <div className="flex flex-col gap-1">
+                    <p className="text-sm font-medium text-zinc-50">{user?.username}</p>
+                    <p className="text-xs font-medium text-zinc-500">Signed in with GitHub</p>
+                </div>
+            </Show>
+            <Show
+                when={user}
+                fallback={
+                    <Button className="w-full bg-zinc-50 text-zinc-900 hover:bg-zinc-50/90" asChild>
+                        <Link href="/api/auth/github">
+                            <GitHubLogoIcon className="mr-2 inline-block" />
+                            Sign in with GitHub
+                        </Link>
+                    </Button>
+                }
+            >
+                <form action={signOut}>
+                    <Button
+                        variant="secondary"
+                        className="w-full bg-zinc-800 text-zinc-200 hover:bg-zinc-700"
+                    >
+                        Sign out
+                        <LogOut size={12} className="ml-2 inline-block text-zinc-200" />
+                    </Button>
+                </form>
+            </Show>
+            <Separator />
+            <ModeToggle />
         </>
     );
 }

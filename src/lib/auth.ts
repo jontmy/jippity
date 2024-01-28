@@ -1,3 +1,5 @@
+import "server-only";
+
 import { Lucia, type Session, type User } from "lucia";
 import { GitHub } from "arctic";
 import { DrizzleMySQLAdapter } from "@lucia-auth/adapter-drizzle";
@@ -5,6 +7,7 @@ import { db, sessionTable, userTable } from "@/lib/db";
 import { env } from "@/env";
 import { cache } from "react";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 declare module "lucia" {
     // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
@@ -62,3 +65,18 @@ export const auth = cache(
         return result;
     },
 );
+
+export async function signOut() {
+    "use server";
+    const { session } = await auth();
+    if (!session) {
+        return {
+            error: "Unauthorized",
+        };
+    }
+
+    await lucia.invalidateSession(session.id);
+    const sessionCookie = lucia.createBlankSessionCookie();
+    cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+    return redirect("/");
+}
