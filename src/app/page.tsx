@@ -39,13 +39,20 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import Markdown from "react-markdown";
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
+import remarkGfm from "remark-gfm";
 
 export default function Home() {
     const [apiKey] = useLocalStorage("openai-api-key", "");
-    const [gptModel] = useLocalStorage(
+    const [gptModel, setGptModel] = useLocalStorage(
         "openai-gpt-model",
         env.NEXT_PUBLIC_OPENAI_GPT_MODELS[0]?.model,
     );
+    if (!gptModel || !env.NEXT_PUBLIC_OPENAI_GPT_MODELS.map((m) => m.model).includes(gptModel)) {
+        setGptModel(env.NEXT_PUBLIC_OPENAI_GPT_MODELS[0]?.model);
+    }
     const { messages, input, handleInputChange, handleSubmit } = useChat({
         body: {
             apiKey,
@@ -77,7 +84,17 @@ export default function Home() {
                                       (m) => m.model === gptModel,
                                   )?.name}
                         </div>
-                        <p className="whitespace-pre-wrap">{m.content}</p>
+                        <Markdown
+                            remarkPlugins={[remarkGfm, remarkMath]}
+                            rehypePlugins={[[rehypeKatex, { output: "mathml" }]]}
+                            className="space-y-4 *:space-y-4"
+                        >
+                            {m.content
+                                .replaceAll("\\(", "$$")
+                                .replaceAll("\\)", "$$")
+                                .replaceAll("\\[", "\n$$")
+                                .replaceAll("\\]", "$$\n")}
+                        </Markdown>
                     </div>
                 ))}
                 <div className="scroller-anchor" />

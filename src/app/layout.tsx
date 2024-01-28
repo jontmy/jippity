@@ -26,6 +26,20 @@ const satoshi = localFont({
     variable: "--font-satoshi",
 });
 
+const mono = localFont({
+    src: [
+        {
+            path: "../../public/fonts/JetBrainsMono-Variable.ttf",
+            style: "normal",
+        },
+        {
+            path: "../../public/fonts/JetBrainsMono-VariableItalic.ttf",
+            style: "italic",
+        },
+    ],
+    variable: "--font-mono",
+});
+
 export const metadata: Metadata = {
     title: "Jippity",
     description: "Chat with GPT-4. Bring your own API key.",
@@ -41,7 +55,7 @@ type RootLayoutProps = Readonly<{
 export default function RootLayout(props: RootLayoutProps) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={cn("overflow-x-clip bg-muted", satoshi.className, satoshi.variable)}>
+            <body className={cn("overflow-x-clip bg-muted", satoshi.variable, mono.variable)}>
                 <Providers
                     attribute="class"
                     defaultTheme="system"
