@@ -59,6 +59,7 @@
         "drizzle-orm": "^0.29.3",
         "embla-carousel-react": "8.0.0-rc20",
         "eslint-config-prettier": "^9.1.0",
+        "json-stringify-pretty-compact": "^4.0.0",
         "katex": "^0.16.9",
         "lucia": "^3.0.0",
         "lucide-react": "^0.314.0",
