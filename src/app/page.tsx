@@ -93,7 +93,9 @@ export default function Home() {
                                 .replaceAll("\\(", "$$")
                                 .replaceAll("\\)", "$$")
                                 .replaceAll("\\[", "\n$$")
-                                .replaceAll("\\]", "$$\n")}
+                                .replaceAll("\\]", "$$\n")
+                                .replaceAll("\\begin{align}", "\\begin{aligned}")
+                                .replaceAll("\\end{align}", "\\end{aligned}")}
                         </Markdown>
                     </div>
                 ))}
