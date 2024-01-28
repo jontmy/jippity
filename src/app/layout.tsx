@@ -55,7 +55,14 @@ type RootLayoutProps = Readonly<{
 export default function RootLayout(props: RootLayoutProps) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={cn("overflow-x-clip bg-muted", satoshi.variable, mono.variable)}>
+            <body
+                className={cn(
+                    "overflow-x-clip bg-muted",
+                    satoshi.className,
+                    satoshi.variable,
+                    mono.variable,
+                )}
+            >
                 <Providers
                     attribute="class"
                     defaultTheme="system"
