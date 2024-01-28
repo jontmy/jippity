@@ -43,6 +43,7 @@ import Markdown from "react-markdown";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import remarkGfm from "remark-gfm";
+import { useEffect } from "react";
 
 export default function Home() {
     const [apiKey] = useLocalStorage("openai-api-key", "");
@@ -50,9 +51,14 @@ export default function Home() {
         "openai-gpt-model",
         env.NEXT_PUBLIC_OPENAI_GPT_MODELS[0]?.model,
     );
-    if (!gptModel || !env.NEXT_PUBLIC_OPENAI_GPT_MODELS.map((m) => m.model).includes(gptModel)) {
-        setGptModel(env.NEXT_PUBLIC_OPENAI_GPT_MODELS[0]?.model);
-    }
+    useEffect(() => {
+        if (
+            !gptModel ||
+            !env.NEXT_PUBLIC_OPENAI_GPT_MODELS.map((m) => m.model).includes(gptModel)
+        ) {
+            setGptModel(env.NEXT_PUBLIC_OPENAI_GPT_MODELS[0]?.model);
+        }
+    }, []);
     const { messages, input, handleInputChange, handleSubmit } = useChat({
         body: {
             apiKey,
