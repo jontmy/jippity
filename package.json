@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@hookform/resolvers": "^3.3.4",
+        "@planetscale/database": "^1.14.0",
         "@radix-ui/react-accordion": "^1.1.2",
         "@radix-ui/react-alert-dialog": "^1.0.5",
         "@radix-ui/react-aspect-ratio": "^1.0.3",
@@ -51,6 +52,7 @@
         "clsx": "^2.1.0",
         "cmdk": "^0.2.0",
         "date-fns": "^3.3.1",
+        "drizzle-orm": "^0.29.3",
         "embla-carousel-react": "8.0.0-rc20",
         "eslint-config-prettier": "^9.1.0",
         "katex": "^0.16.9",
