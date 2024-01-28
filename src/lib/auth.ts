@@ -8,6 +8,7 @@ import { env } from "@/env";
 import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 declare module "lucia" {
     // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
@@ -78,5 +79,6 @@ export async function signOut() {
     await lucia.invalidateSession(session.id);
     const sessionCookie = lucia.createBlankSessionCookie();
     cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+    revalidatePath("/");
     return redirect("/");
 }
