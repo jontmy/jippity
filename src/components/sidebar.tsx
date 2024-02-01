@@ -8,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { db } from "@/lib/db";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow, getYear } from "date-fns";
 import { AES, enc } from "crypto-js";
 import { env } from "@/env";
 
@@ -33,14 +33,14 @@ export async function Sidebar() {
         })),
     }));
     return (
-        <aside className="hidden h-screen flex-col gap-6 bg-zinc-900 p-4 pb-6 sm:p-6 sm:pb-8 md:flex">
+        <aside className="hidden h-screen flex-col bg-zinc-900 p-4 pb-6 sm:p-6 sm:pb-8 md:flex">
             <Link href="/" className="text-2xl font-black tracking-tight text-white">
                 Jippity.
             </Link>
-            <p className="text-sm font-medium text-zinc-400">
+            <p className="pt-6 text-sm font-medium text-zinc-400">
                 {user ? "Recent chats" : "Sign in to see your chat history."}
             </p>
-            <ul className="-mt-4 flex w-[calc(100%+theme(width.4))] -translate-x-4 flex-col gap-3 overflow-x-auto overflow-y-auto">
+            <ul className="-mt-4 flex w-[calc(100%+theme(width.4))] -translate-x-4 flex-col gap-3 overflow-x-auto overflow-y-auto pt-6">
                 {decrypted.map((chat) => {
                     return (
                         <li key={chat.id}>
@@ -73,7 +73,7 @@ export async function Sidebar() {
             <Show
                 when={user}
                 fallback={
-                    <div className="flex flex-col gap-3 text-center">
+                    <div className="flex flex-col gap-3 pt-4 text-center">
                         <Button
                             className="w-full bg-zinc-50 text-zinc-900 hover:bg-zinc-50/90"
                             asChild
@@ -89,7 +89,7 @@ export async function Sidebar() {
                     </div>
                 }
             >
-                <form action={signOut}>
+                <form action={signOut} className="pt-6">
                     <Button
                         variant="secondary"
                         className="w-full bg-zinc-800 text-zinc-200 hover:bg-zinc-700"
@@ -100,8 +100,13 @@ export async function Sidebar() {
                 </form>
             </Show>
             {!user && <div className="grow" />}
-            <Separator className="bg-zinc-700" />
-            <ModeToggle />
+            <Separator className="mt-6 bg-zinc-700" />
+            <ModeToggle className="mt-6" />
+            <nav className="flex flex-col gap-1 pt-6 text-xs text-zinc-400">
+                <Link href="/privacy-policy">Privacy Policy</Link>
+                <Link href="/terms-of-service">Terms of Service</Link>
+            </nav>
+            <p className="pt-3 text-xs text-zinc-500">Copyright © {getYear(new Date())} Jippity</p>
         </aside>
     );
 }
