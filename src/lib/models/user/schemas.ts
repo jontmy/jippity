@@ -4,14 +4,12 @@ import { messageTable } from "@/lib/models/message/schemas";
 import { char, datetime, varchar } from "drizzle-orm/mysql-core";
 import { sessionTable } from "@/lib/models/session/schemas";
 import { mysqlTable } from "@/lib/models/utils";
+import { accountTable } from "@/lib/models/account/schemas";
 
 export const userTable = mysqlTable("user", {
     id: char("id", {
         length: 16,
     }).primaryKey(),
-    githubId: varchar("github_id", {
-        length: 40,
-    }).notNull(),
     username: varchar("username", {
         length: 32,
     }).notNull(),
@@ -24,6 +22,7 @@ export const userRelations = relations(userTable, ({ many }) => ({
     chats: many(chatTable),
     messages: many(messageTable),
     sessions: many(sessionTable),
+    accounts: many(accountTable),
 }));
 
 export type TUser = typeof userTable.$inferSelect;

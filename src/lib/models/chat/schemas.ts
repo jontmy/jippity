@@ -14,7 +14,10 @@ export const chatTable = mysqlTable("chat", {
         length: 16,
     })
         .notNull()
-        .references(() => userTable.id),
+        .references(() => userTable.id, {
+            onDelete: "cascade",
+            onUpdate: "cascade",
+        }),
     createdAt: datetime("created_at")
         .notNull()
         .default(sql`CURRENT_TIMESTAMP`),

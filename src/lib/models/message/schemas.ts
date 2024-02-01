@@ -14,12 +14,18 @@ export const messageTable = mysqlTable("message", {
         length: 16,
     })
         .notNull()
-        .references(() => chatTable.id),
+        .references(() => chatTable.id, {
+            onDelete: "cascade",
+            onUpdate: "cascade",
+        }),
     userId: char("user_id", {
         length: 16,
     })
         .notNull()
-        .references(() => userTable.id),
+        .references(() => userTable.id, {
+            onDelete: "cascade",
+            onUpdate: "cascade",
+        }),
     content: text("content").notNull(),
     role: mysqlEnum("message_role", ["user", "assistant"]).notNull(),
     createdAt: datetime("created_at")

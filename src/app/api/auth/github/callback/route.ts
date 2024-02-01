@@ -2,9 +2,10 @@ import { github, lucia } from "@/lib/auth";
 import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
 import { db } from "@/lib/db";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { userTable } from "@/lib/models/user/schemas";
 import { generateId } from "@/lib/models/utils";
+import { accountTable } from "@/lib/models/account/schemas";
 
 type GitHubUser = {
     id: string;
@@ -30,14 +31,19 @@ export async function GET(request: Request): Promise<Response> {
             },
         });
         const githubUser = (await githubUserResponse.json()) as GitHubUser;
-        const [existingUser] = await db
+        const [existingAccount] = await db
             .select()
-            .from(userTable)
-            .where(eq(userTable.githubId, githubUser.id))
+            .from(accountTable)
+            .where(
+                and(
+                    eq(accountTable.provider, "github"),
+                    eq(accountTable.providerUserId, githubUser.id),
+                ),
+            )
             .limit(1);
 
-        if (existingUser) {
-            const session = await lucia.createSession(existingUser.id, {});
+        if (existingAccount) {
+            const session = await lucia.createSession(existingAccount.userId, {});
             const sessionCookie = lucia.createSessionCookie(session.id);
             cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
             return new Response(null, {
@@ -49,10 +55,16 @@ export async function GET(request: Request): Promise<Response> {
         }
 
         const userId = generateId();
-        await db.insert(userTable).values({
-            id: userId,
-            githubId: githubUser.id,
-            username: githubUser.login,
+        await db.transaction(async (trx) => {
+            await trx.insert(userTable).values({
+                id: userId,
+                username: githubUser.login,
+            });
+            await trx.insert(accountTable).values({
+                provider: "github",
+                providerUserId: githubUser.id,
+                userId,
+            });
         });
 
         const session = await lucia.createSession(userId, {});

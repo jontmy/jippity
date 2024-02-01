@@ -4,6 +4,7 @@ import { env } from "@/env";
 import * as chat from "@/lib/models/chat/schemas";
 import * as message from "@/lib/models/message/schemas";
 import * as user from "@/lib/models/user/schemas";
+import * as account from "@/lib/models/account/schemas";
 import * as session from "@/lib/models/session/schemas";
 
 const connection = connect({
@@ -17,6 +18,7 @@ export const db = drizzle(connection, {
         ...chat,
         ...message,
         ...user,
+        ...account,
         ...session,
     },
 });
