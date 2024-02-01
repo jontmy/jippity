@@ -67,6 +67,22 @@ export default function Home() {
     return (
         <div className="flex w-full max-w-prose grow flex-col justify-between gap-4">
             <div className="scroller flex flex-col gap-6 overflow-x-auto">
+                <svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="1200" height="630" fill="#18181b" />
+                    <text
+                        x="50%"
+                        y="45%"
+                        textAnchor="middle"
+                        fill="white"
+                        dy=".3em"
+                        className="font-brand text-7xl font-black"
+                    >
+                        Jippity.
+                    </text>
+                    <text x="50%" y="60%" textAnchor="middle" fill="white" dy=".3em">
+                        Chat with GPT-4. Bring your own API key.
+                    </text>
+                </svg>
                 <ClientOnly>
                     {!apiKey && (
                         <div className="flex flex-col gap-2">
