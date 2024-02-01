@@ -24,6 +24,16 @@ const satoshi = localFont({
     variable: "--font-satoshi",
 });
 
+const sora = localFont({
+    src: [
+        {
+            path: "../../public/fonts/Sora-Variable.ttf",
+            style: "normal",
+        },
+    ],
+    variable: "--font-brand",
+});
+
 const mono = localFont({
     src: [
         {
@@ -67,6 +77,7 @@ export default function RootLayout(props: RootLayoutProps) {
                     "h-screen overflow-x-clip bg-muted",
                     satoshi.className,
                     satoshi.variable,
+                    sora.variable,
                     mono.variable,
                 )}
             >

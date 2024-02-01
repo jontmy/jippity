@@ -23,6 +23,7 @@ const config = {
         extend: {
             fontFamily: {
                 sans: ["var(--font-satoshi)", "sans-serif"],
+                brand: ["var(--font-brand)", "sans-serif"],
                 mono: ["var(--font-mono)", "monospace"],
             },
             colors: {

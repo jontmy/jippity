@@ -34,7 +34,7 @@ export async function Sidebar() {
     }));
     return (
         <aside className="hidden h-screen flex-col bg-zinc-900 p-4 pb-6 sm:p-6 sm:pb-8 md:flex">
-            <Link href="/" className="text-2xl font-black tracking-tight text-white">
+            <Link href="/" className="font-brand text-2xl font-black tracking-tight text-white">
                 Jippity.
             </Link>
             <p className="pt-6 text-sm font-medium text-zinc-400">
