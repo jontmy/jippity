@@ -10,7 +10,7 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { db } from "@/lib/db";
 import { formatDistanceToNow } from "date-fns";
 
-export default async function Default() {
+export default async function Page() {
     const { user } = await auth();
     const chats = !user
         ? []
