@@ -10,7 +10,7 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { db } from "@/lib/db";
 import { formatDistanceToNow } from "date-fns";
 
-export default async function Page() {
+export default async function Default() {
     const { user } = await auth();
     const chats = !user
         ? []
@@ -31,10 +31,10 @@ export default async function Page() {
             <p className="text-sm font-medium text-zinc-400">
                 {user ? "Recent chats" : "Sign in to see your chat history."}
             </p>
-            <ul className="-mt-4 flex flex-col gap-3">
+            <ul className="-mt-4 flex w-[calc(100%+theme(width.4))] -translate-x-4 flex-col gap-3 overflow-x-auto overflow-y-auto">
                 {chats.map((chat) => {
                     return (
-                        <li key={chat.id} className="w-[calc(100%+theme(width.4))] -translate-x-4">
+                        <li key={chat.id}>
                             <Button
                                 variant="ghost"
                                 className="flex h-fit flex-col items-start gap-1.5 hover:bg-zinc-700/80"
