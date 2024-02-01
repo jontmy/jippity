@@ -9,7 +9,7 @@ export const size = {
 export const contentType = "image/png";
 
 export default async function Image() {
-    const res = await fetch(new URL("./fonts/Satoshi-Variable.ttf"));
+    const res = await fetch(new URL("./fonts/Satoshi-Black.ttf"));
     const font = await res.arrayBuffer();
 
     return new ImageResponse(
