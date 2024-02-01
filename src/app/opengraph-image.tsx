@@ -8,10 +8,7 @@ export const size = {
 
 export const contentType = "image/png";
 
-export default async function Image() {
-    const res = await fetch(new URL("./fonts/Satoshi-Black.ttf"));
-    const font = await res.arrayBuffer();
-
+export default function Image() {
     return new ImageResponse(
         (
             <div
@@ -26,19 +23,11 @@ export default async function Image() {
                     justifyContent: "center",
                 }}
             >
-                Jippity.
+                <span tw="font-sans">Jippity.</span>
             </div>
         ),
         {
             ...size,
-            fonts: [
-                {
-                    name: "Satoshi Variable",
-                    data: font,
-                    style: "normal",
-                    weight: 900,
-                },
-            ],
         },
     );
 }
