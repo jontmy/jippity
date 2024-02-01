@@ -40,6 +40,11 @@ export async function Sidebar() {
             <p className="pt-6 text-sm font-medium text-zinc-400">
                 {user ? "Recent chats" : "Sign in to see your chat history."}
             </p>
+            {!user && (
+                <p className="mt-3 text-xs text-zinc-400">
+                    Good to know: All of your messages with Jippity are encrypted at rest.
+                </p>
+            )}
             <ul className="-mt-4 flex w-[calc(100%+theme(width.4))] -translate-x-4 flex-col gap-3 overflow-x-auto overflow-y-auto pt-6">
                 {decrypted.map((chat) => {
                     return (
