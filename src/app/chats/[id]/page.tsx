@@ -33,7 +33,7 @@ export default async function Page({ params }: PageProps) {
     }));
     return (
         <div className="flex flex-col gap-6">
-            <ul className="flex w-full max-w-prose flex-col gap-6">
+            <ul className="flex w-full max-w-prose flex-col gap-6 overflow-x-auto">
                 {decrypted.map((m) => (
                     <Message key={m.id} {...m} as="li" />
                 ))}

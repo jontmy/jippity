@@ -66,7 +66,7 @@ export default function Home() {
 
     return (
         <div className="flex w-full max-w-prose grow flex-col justify-between gap-4">
-            <div className="scroller flex flex-col gap-6">
+            <div className="scroller flex flex-col gap-6 overflow-x-auto">
                 <ClientOnly>
                     {!apiKey && (
                         <div className="flex flex-col gap-2">
