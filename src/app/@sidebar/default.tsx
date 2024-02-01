@@ -53,7 +53,7 @@ export default async function Default() {
                     );
                 })}
             </ul>
-            <div className="grow" />
+            {user && <div className="grow" />}
             <Show when={user} as="div" className="flex items-center gap-4">
                 <UserAvatar user={user!} className="size-12 text-zinc-200 *:bg-zinc-700" />
                 <div className="flex flex-col gap-1">
@@ -64,12 +64,20 @@ export default async function Default() {
             <Show
                 when={user}
                 fallback={
-                    <Button className="w-full bg-zinc-50 text-zinc-900 hover:bg-zinc-50/90" asChild>
-                        <Link href="/api/auth/github">
-                            <GitHubLogoIcon className="mr-2 inline-block" />
-                            Sign in with GitHub
-                        </Link>
-                    </Button>
+                    <div className="flex flex-col gap-3 text-center">
+                        <Button
+                            className="w-full bg-zinc-50 text-zinc-900 hover:bg-zinc-50/90"
+                            asChild
+                        >
+                            <Link href="/api/auth/github">
+                                <GitHubLogoIcon className="mr-2 inline-block" />
+                                Sign in with GitHub
+                            </Link>
+                        </Button>
+                        <p className="text-xs font-medium text-zinc-400">
+                            More sign-in options coming soon.
+                        </p>
+                    </div>
                 }
             >
                 <form action={signOut}>
@@ -82,6 +90,7 @@ export default async function Default() {
                     </Button>
                 </form>
             </Show>
+            {!user && <div className="grow" />}
             <Separator className="bg-zinc-700" />
             <ModeToggle />
         </>
