@@ -2,7 +2,7 @@ import { defineConfig } from "drizzle-kit";
 import { env } from "@/env";
 
 export default defineConfig({
-    schema: "./src/lib/db.ts",
+    schema: "./src/lib/models/**/schemas.ts",
     driver: "mysql2",
     dbCredentials: {
         uri: env.DATABASE_URL,
