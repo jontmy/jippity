@@ -78,7 +78,7 @@ export async function Sidebar() {
                             className="w-full bg-zinc-50 text-zinc-900 hover:bg-zinc-50/90"
                             asChild
                         >
-                            <Link href="/api/auth/github">
+                            <Link href="/api/auth/github" target="_blank">
                                 <GitHubLogoIcon className="mr-2 inline-block" />
                                 Sign in with GitHub
                             </Link>
