@@ -4,6 +4,9 @@ import { notFound } from "next/navigation";
 import { Message } from "@/components/message";
 import { AES, enc } from "crypto-js";
 import { env } from "@/env";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 type PageProps = {
     params: {
@@ -29,10 +32,19 @@ export default async function Page({ params }: PageProps) {
         content: AES.decrypt(m.content, env.ENCRYPTION_KEY).toString(enc.Utf8),
     }));
     return (
-        <ul className="flex w-full max-w-prose flex-col gap-6">
-            {decrypted.map((m) => (
-                <Message key={m.id} {...m} as="li" />
-            ))}
-        </ul>
+        <div className="flex flex-col gap-6">
+            <ul className="flex w-full max-w-prose flex-col gap-6">
+                {decrypted.map((m) => (
+                    <Message key={m.id} {...m} as="li" />
+                ))}
+            </ul>
+            <Separator className="dark:bg-muted-foreground/50" />
+            <p className="text-sm text-muted-foreground">Chat continuation coming soon.</p>
+            <Button asChild>
+                <Link href="/" className="w-fit px-16 sm:px-32">
+                    New chat
+                </Link>
+            </Button>
+        </div>
     );
 }
