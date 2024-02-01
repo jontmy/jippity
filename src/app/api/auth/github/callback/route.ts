@@ -1,8 +1,9 @@
 import { github, lucia } from "@/lib/auth";
 import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
-import { db, generateId, userTable } from "@/lib/db";
+import { db, generateId } from "@/lib/db";
 import { eq } from "drizzle-orm";
+import { userTable } from "@/lib/models/user/schemas";
 
 type GitHubUser = {
     id: string;

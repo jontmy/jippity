@@ -3,12 +3,14 @@ import "server-only";
 import { Lucia, type Session, type User } from "lucia";
 import { GitHub } from "arctic";
 import { DrizzleMySQLAdapter } from "@lucia-auth/adapter-drizzle";
-import { db, sessionTable, userTable } from "@/lib/db";
+import { db } from "@/lib/db";
 import { env } from "@/env";
 import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { userTable } from "@/lib/models/user/schemas";
+import { sessionTable } from "@/lib/models/session/schemas";
 
 declare module "lucia" {
     // eslint-disable-next-line @typescript-eslint/consistent-type-definitions

@@ -1,11 +1,13 @@
 "use server";
 
 import { auth } from "@/lib/auth";
-import { chatTable, db, generateId, messageTable } from "@/lib/db";
+import { db, generateId } from "@/lib/db";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { AES } from "crypto-js";
 import { env } from "@/env";
+import { chatTable } from "@/lib/models/chat/schemas";
+import { messageTable } from "@/lib/models/message/schemas";
 
 const CreateMessageSchema = z.object({
     chatId: z.string().optional().default(generateId),
