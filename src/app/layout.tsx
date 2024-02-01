@@ -10,6 +10,8 @@ import { env } from "@/env";
 import { Providers } from "@/app/providers";
 import { Sidebar } from "@/components/sidebar";
 
+export const runtime = "edge";
+
 const satoshi = localFont({
     src: [
         {
