@@ -1,3 +1,9 @@
+export const metadata = {
+    title: "Terms of Service",
+    description:
+        "By accessing or using Jippity, you confirm you have read, understood, and agree to our Terms, along with our Privacy Policy.",
+};
+
 export default function Page() {
     return (
         <article className="prose dark:prose-invert py-2">

@@ -41,10 +41,19 @@ const mono = localFont({
 });
 
 export const metadata: Metadata = {
-    title: "Jippity",
+    metadataBase: new URL(env.VERCEL_URL),
+    title: {
+        template: "%s | Jippity",
+        default: "Jippity",
+    },
     description: "Chat with GPT-4. Bring your own API key.",
-    verification: {
-        google: env.NEXT_PUBLIC_GOOGLE_SEARCH_CONSOLE_TAG,
+    openGraph: {
+        type: "website",
+        locale: "en_US",
+        title: "Jippity",
+        description: "Chat with GPT-4. Bring your own API key.",
+        url: env.VERCEL_URL,
+        siteName: "Jippity",
     },
 };
 

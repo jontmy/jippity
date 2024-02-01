@@ -1,6 +1,12 @@
+export const metadata = {
+    title: "Privacy Policy",
+    description:
+        "Our Privacy Policy describes how your personal information is collected, used, and shared when you use Jippity.",
+};
+
 export default function Page() {
     return (
-        <article className="prose py-2 dark:prose-invert">
+        <article className="prose dark:prose-invert py-2">
             <h1>Privacy Policy</h1>
             <h2 className="text-sm text-muted-foreground">Effective as of 01 February 2024</h2>
             <p>
