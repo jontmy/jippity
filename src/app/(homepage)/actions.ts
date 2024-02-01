@@ -4,6 +4,8 @@ import { auth } from "@/lib/auth";
 import { chatTable, db, generateId, messageTable } from "@/lib/db";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import { AES } from "crypto-js";
+import { env } from "@/env";
 
 const CreateMessageSchema = z.object({
     chatId: z.string().optional().default(generateId),
@@ -19,6 +21,7 @@ export async function createMessage(input: CreateMessageInput) {
     if (!user) {
         return chatId;
     }
+    const ciphertext = AES.encrypt(content, env.ENCRYPTION_KEY).toString();
     await db.transaction(async (trx) => {
         await trx.insert(chatTable).ignore().values({
             id: chatId,
@@ -28,7 +31,7 @@ export async function createMessage(input: CreateMessageInput) {
         await trx.insert(messageTable).values({
             chatId,
             userId: user.id,
-            content,
+            content: ciphertext,
             role,
             createdAt: new Date(),
         });

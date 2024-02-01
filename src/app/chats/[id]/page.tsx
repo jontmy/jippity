@@ -2,6 +2,8 @@ import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { Message } from "@/components/message";
+import { AES, enc } from "crypto-js";
+import { env } from "@/env";
 
 type PageProps = {
     params: {
@@ -22,9 +24,13 @@ export default async function Page({ params }: PageProps) {
     if (messages.length === 0) {
         notFound();
     }
+    const decrypted = messages.map((m) => ({
+        ...m,
+        content: AES.decrypt(m.content, env.ENCRYPTION_KEY).toString(enc.Utf8),
+    }));
     return (
         <ul className="flex w-full max-w-prose flex-col gap-6">
-            {messages.map((m) => (
+            {decrypted.map((m) => (
                 <Message key={m.id} {...m} as="li" />
             ))}
         </ul>

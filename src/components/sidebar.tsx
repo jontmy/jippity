@@ -1,4 +1,4 @@
-import { ModeToggle } from "@/app/@sidebar/mode-toggle";
+import { ModeToggle } from "@/components/mode-toggle";
 import { auth, signOut } from "@/lib/auth";
 import { Show } from "@/components/show";
 import { UserAvatar } from "@/components/user-avatar";
@@ -9,13 +9,15 @@ import Link from "next/link";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { db } from "@/lib/db";
 import { formatDistanceToNow } from "date-fns";
+import { AES, enc } from "crypto-js";
+import { env } from "@/env";
 
-export default async function Default() {
+export async function Sidebar() {
     const { user } = await auth();
     const chats = !user
         ? []
         : await db.query.chatTable.findMany({
-              where: (posts, { eq }) => eq(posts.userId, user.id),
+              where: (chats, { eq }) => eq(chats.userId, user.id),
               orderBy: (chats, { desc }) => [desc(chats.createdAt)],
               with: {
                   messages: {
@@ -23,8 +25,15 @@ export default async function Default() {
                   },
               },
           });
+    const decrypted = chats.map((c) => ({
+        ...c,
+        messages: c.messages.map((m) => ({
+            ...m,
+            content: AES.decrypt(m.content, env.ENCRYPTION_KEY).toString(enc.Utf8),
+        })),
+    }));
     return (
-        <>
+        <aside className="hidden h-screen flex-col gap-6 bg-zinc-900 p-4 pb-6 sm:p-6 sm:pb-8 md:flex">
             <Link href="/" className="text-2xl font-black tracking-tight text-white">
                 Jippity.
             </Link>
@@ -32,7 +41,7 @@ export default async function Default() {
                 {user ? "Recent chats" : "Sign in to see your chat history."}
             </p>
             <ul className="-mt-4 flex w-[calc(100%+theme(width.4))] -translate-x-4 flex-col gap-3 overflow-x-auto overflow-y-auto">
-                {chats.map((chat) => {
+                {decrypted.map((chat) => {
                     return (
                         <li key={chat.id}>
                             <Button
@@ -93,6 +102,6 @@ export default async function Default() {
             {!user && <div className="grow" />}
             <Separator className="bg-zinc-700" />
             <ModeToggle />
-        </>
+        </aside>
     );
 }
