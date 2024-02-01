@@ -9,12 +9,16 @@ import { cn } from "@/lib/utils";
 import { ClientOnly } from "@/components/client-only";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function ModeToggle() {
+type ModeToggleProps = {
+    className?: string;
+};
+
+export function ModeToggle(props: ModeToggleProps) {
     const { theme, setTheme } = useTheme();
     return (
         <TooltipProvider>
-            <ClientOnly fallback={<Skeleton className="h-9 w-2/3" />}>
-                <div className="flex w-2/3">
+            <ClientOnly fallback={<Skeleton className={cn("h-9 w-2/3", props.className)} />}>
+                <div className={cn("flex w-2/3", props.className)}>
                     <Tooltip>
                         <TooltipTrigger onClick={() => setTheme("light")} asChild>
                             <Button
