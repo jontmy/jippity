@@ -16,7 +16,10 @@ export const sessionTable = mysqlTable("session", {
 });
 
 export const sessionRelations = relations(sessionTable, ({ one }) => ({
-    user: one(userTable),
+    user: one(userTable, {
+        fields: [sessionTable.userId],
+        references: [userTable.id],
+    }),
 }));
 
 export type TSession = typeof sessionTable.$inferSelect;
