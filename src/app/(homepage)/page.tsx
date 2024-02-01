@@ -65,7 +65,7 @@ export default function Home() {
     }
 
     return (
-        <div className="flex w-full max-w-prose grow flex-col justify-between gap-4">
+        <div className="relative flex w-full max-w-prose grow flex-col justify-between gap-4">
             <div className="scroller flex flex-col gap-6 overflow-x-auto">
                 <ClientOnly>
                     {!apiKey && (
@@ -85,7 +85,7 @@ export default function Home() {
             </div>
             <form
                 onSubmit={handleSubmit}
-                className="flex w-full items-center justify-center px-6 sm:px-8"
+                className="absolute bottom-0 flex w-full items-center justify-center px-6 sm:relative sm:px-8"
             >
                 <div className="flex w-full max-w-prose grow gap-2">
                     <TooltipProvider>
