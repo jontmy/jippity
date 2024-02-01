@@ -2,7 +2,7 @@ export default function Page() {
     return (
         <article className="prose dark:prose-invert py-2">
             <h1>Terms of Service</h1>
-            <h2>Effective as of 01 February 2024</h2>
+            <h2 className="text-sm text-muted-foreground">Effective as of 01 February 2024</h2>
             <p>
                 Welcome to Jippity. By accessing or using our web application, you agree to be bound
                 by these Terms of Service. Please read them carefully. If you do not agree with any
