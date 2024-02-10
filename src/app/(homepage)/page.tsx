@@ -75,10 +75,7 @@ export default function Home() {
                                 System
                             </div>
                             <p className="whitespace-pre-wrap">Please set an API key.</p>
-                            <Button
-                                className="my-2 flex max-w-64 items-center gap-2 bg-zinc-800 hover:bg-zinc-700"
-                                asChild
-                            >
+                            <Button className="my-2 flex max-w-64 items-center gap-2" asChild>
                                 <Link href="/settings">
                                     <GearIcon />
                                     Go to settings
