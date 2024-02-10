@@ -54,15 +54,18 @@ export async function GET(request: Request): Promise<Response> {
             .from(accountTable)
             .where(
                 and(
-                    eq(accountTable.provider, "google"),
+                    eq(accountTable.provider, "Google"),
                     eq(accountTable.providerUserId, googleUser.sub),
                 ),
             )
             .limit(1);
 
         if (existingAccount) {
-            const session = await lucia.createSession(existingAccount.userId, {});
+            const session = await lucia.createSession(existingAccount.userId, {
+                provider: "Google",
+            });
             const sessionCookie = lucia.createSessionCookie(session.id);
+            console.log(session);
             cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
             return new Response(null, {
                 status: 302,
@@ -87,13 +90,15 @@ export async function GET(request: Request): Promise<Response> {
                 picture: googleUser.picture,
             });
             await trx.insert(accountTable).values({
-                provider: "google",
+                provider: "Google",
                 providerUserId: googleUser.sub,
                 userId,
             });
         });
 
-        const session = await lucia.createSession(userId, {});
+        const session = await lucia.createSession(userId, {
+            provider: "Google",
+        });
         const sessionCookie = lucia.createSessionCookie(session.id);
         cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 

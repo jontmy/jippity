@@ -36,14 +36,16 @@ export async function GET(request: Request): Promise<Response> {
             .from(accountTable)
             .where(
                 and(
-                    eq(accountTable.provider, "github"),
+                    eq(accountTable.provider, "GitHub"),
                     eq(accountTable.providerUserId, githubUser.id),
                 ),
             )
             .limit(1);
 
         if (existingAccount) {
-            const session = await lucia.createSession(existingAccount.userId, {});
+            const session = await lucia.createSession(existingAccount.userId, {
+                provider: "GitHub",
+            });
             const sessionCookie = lucia.createSessionCookie(session.id);
             cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
             return new Response(null, {
@@ -61,13 +63,15 @@ export async function GET(request: Request): Promise<Response> {
                 username: githubUser.login,
             });
             await trx.insert(accountTable).values({
-                provider: "github",
+                provider: "GitHub",
                 providerUserId: githubUser.id,
                 userId,
             });
         });
 
-        const session = await lucia.createSession(userId, {});
+        const session = await lucia.createSession(userId, {
+            provider: "GitHub",
+        });
         const sessionCookie = lucia.createSessionCookie(session.id);
         cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 

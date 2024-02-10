@@ -13,7 +13,7 @@ import { AES, enc } from "crypto-js";
 import { env } from "@/env";
 
 export async function Sidebar() {
-    const { user } = await auth();
+    const { session, user } = await auth();
     const chats = !user
         ? []
         : await db.query.chatTable.findMany({
@@ -68,11 +68,13 @@ export async function Sidebar() {
                 })}
             </ul>
             {user && <div className="grow" />}
-            <Show when={user} as="div" className="flex items-center gap-4">
+            <Show when={user && session} as="div" className="flex items-center gap-4">
                 <UserAvatar user={user!} className="size-12 text-zinc-200 *:bg-zinc-700" />
                 <div className="flex flex-col gap-1">
                     <p className="text-sm font-medium text-zinc-50">{user?.username}</p>
-                    <p className="text-xs font-medium text-zinc-500">Signed in with GitHub</p>
+                    <p className="text-xs font-medium text-zinc-500">
+                        Signed in with {session?.provider}
+                    </p>
                 </div>
             </Show>
             <Show

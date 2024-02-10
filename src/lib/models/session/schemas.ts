@@ -1,6 +1,6 @@
 import { relations } from "drizzle-orm";
 import { userTable } from "@/lib/models/user/schemas";
-import { char, datetime, varchar } from "drizzle-orm/mysql-core";
+import { char, datetime, mysqlEnum, varchar } from "drizzle-orm/mysql-core";
 import { mysqlTable } from "@/lib/models/utils";
 
 export const sessionTable = mysqlTable("session", {
@@ -15,6 +15,7 @@ export const sessionTable = mysqlTable("session", {
             onDelete: "cascade",
             onUpdate: "cascade",
         }),
+    provider: mysqlEnum("provider", ["GitHub", "Google"]).notNull(),
     expiresAt: datetime("expires_at").notNull(),
 });
 

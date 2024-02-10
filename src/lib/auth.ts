@@ -16,13 +16,14 @@ declare module "lucia" {
     // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
     interface Register {
         Lucia: typeof lucia;
-        DatabaseUserAttributes: DatabaseUserAttributes;
+        DatabaseSessionAttributes: {
+            provider: string;
+        };
+        DatabaseUserAttributes: {
+            username: string;
+        };
     }
 }
-
-type DatabaseUserAttributes = {
-    username: string;
-};
 
 const adapter = new DrizzleMySQLAdapter(db, sessionTable, userTable);
 export const lucia = new Lucia(adapter, {
@@ -31,6 +32,12 @@ export const lucia = new Lucia(adapter, {
         attributes: {
             secure: process.env.NODE_ENV === "production",
         },
+    },
+    getSessionAttributes: (attributes) => {
+        console.log(attributes);
+        return {
+            provider: attributes.provider,
+        };
     },
     getUserAttributes: (attributes) => {
         return {
@@ -58,6 +65,7 @@ export const auth = cache(
         }
 
         const result = await lucia.validateSession(sessionId);
+        console.log(result);
         // Next.js throws when you attempt to set cookie when rendering a page
         try {
             if (result.session && result.session.fresh) {
