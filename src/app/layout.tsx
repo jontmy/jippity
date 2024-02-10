@@ -67,6 +67,12 @@ export const metadata: Metadata = {
         url: env.NEXT_PUBLIC_FRONTEND_URL,
         siteName: "Jippity",
     },
+    appleWebApp: {
+        title: "Jippity",
+        statusBarStyle: "black-translucent",
+        // https://appsco.pe/developer/splash-screens
+        startupImage: "/splashes/iphonexsmax_splash.png",
+    },
 };
 
 export default function RootLayout(props: Readonly<PropsWithChildren>) {
