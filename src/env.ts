@@ -16,6 +16,7 @@ export const env = createEnv({
     },
     client: {
         NEXT_PUBLIC_FRONTEND_URL: z.string().min(1).url(),
+        NEXT_PUBLIC_JIPPITY_REPO_URL: z.string().min(1).url(),
         NEXT_PUBLIC_OPENAI_GPT_MODELS: z
             .string()
             .min(1)
@@ -42,6 +43,7 @@ export const env = createEnv({
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
         NEXT_PUBLIC_FRONTEND_URL: process.env.NEXT_PUBLIC_FRONTEND_URL,
+        NEXT_PUBLIC_JIPPITY_REPO_URL: process.env.NEXT_PUBLIC_JIPPITY_REPO_URL,
         NEXT_PUBLIC_OPENAI_GPT_MODELS: process.env.NEXT_PUBLIC_OPENAI_GPT_MODELS,
     },
 });

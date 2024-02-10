@@ -65,7 +65,6 @@ export async function GET(request: Request): Promise<Response> {
                 provider: "Google",
             });
             const sessionCookie = lucia.createSessionCookie(session.id);
-            console.log(session);
             cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
             return new Response(null, {
                 status: 302,

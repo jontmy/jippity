@@ -11,8 +11,31 @@ import { db } from "@/lib/db";
 import { formatDistanceToNow, getYear } from "date-fns";
 import { AES, enc } from "crypto-js";
 import { env } from "@/env";
+import { cn } from "@/lib/utils";
+import { Suspense } from "react";
 
-export async function Sidebar() {
+type SidebarProps = {
+    contentOnly?: boolean;
+};
+
+export function Sidebar(props: SidebarProps) {
+    return (
+        <aside
+            className={cn({
+                "flex-col sm:flex": true,
+                "fixed left-0 top-0 hidden h-screen w-72 bg-zinc-900 p-4 pb-6 pt-[72px] sm:p-6 sm:pb-8 sm:pt-20":
+                    !props.contentOnly,
+                "flex h-full": props.contentOnly,
+            })}
+        >
+            <Suspense>
+                <SidebarContent />
+            </Suspense>
+        </aside>
+    );
+}
+
+async function SidebarContent() {
     const { session, user } = await auth();
     const chats = !user
         ? []
@@ -32,12 +55,10 @@ export async function Sidebar() {
             content: AES.decrypt(m.content, env.ENCRYPTION_KEY).toString(enc.Utf8),
         })),
     }));
+
     return (
-        <aside className="hidden h-screen flex-col bg-zinc-900 p-4 pb-6 sm:p-6 sm:pb-8 md:flex">
-            <Link href="/" className="font-brand text-2xl font-black tracking-tight text-white">
-                Jippity.
-            </Link>
-            <p className="pt-6 text-sm font-medium text-zinc-400">
+        <>
+            <p className="text-sm font-medium text-zinc-400">
                 {user ? "Recent chats" : "Sign in to see your chat history."}
             </p>
             {!user && (
@@ -45,7 +66,7 @@ export async function Sidebar() {
                     Good to know: All of your messages with Jippity are encrypted at rest.
                 </p>
             )}
-            <ul className="-mt-4 flex w-[calc(100%+theme(width.4))] -translate-x-4 flex-col gap-3 overflow-x-auto overflow-y-auto pt-6">
+            <ul className="flex w-[calc(100%+theme(width.4))] -translate-x-4 flex-col gap-3 overflow-x-auto overflow-y-auto pt-3">
                 {decrypted.map((chat) => {
                     return (
                         <li key={chat.id}>
@@ -85,19 +106,19 @@ export async function Sidebar() {
                             className="w-full bg-zinc-50 text-zinc-900 hover:bg-zinc-50/90"
                             asChild
                         >
-                            <a href="/api/auth/google">
-                                <GoogleLogoIcon />
-                                Sign in with Google
-                            </a>
-                        </Button>
-                        <Button
-                            className="w-full bg-zinc-50 text-zinc-900 hover:bg-zinc-50/90"
-                            asChild
-                        >
                             <a href="/api/auth/github">
                                 <GitHubLogoIcon className="mr-2 inline-block" />
                                 Sign in with GitHub
                             </a>
+                        </Button>
+                        <Button
+                            className="w-full bg-zinc-50 text-zinc-900 hover:bg-zinc-50/90"
+                            disabled
+                        >
+                            {/*<a href="/api/auth/google">*/}
+                            <GoogleLogoIcon />
+                            Sign in with Google (soon)
+                            {/*</a>*/}
                         </Button>
                     </div>
                 }
@@ -120,7 +141,7 @@ export async function Sidebar() {
                 <Link href="/terms-of-service">Terms of Service</Link>
             </nav>
             <p className="pt-3 text-xs text-zinc-500">Copyright © {getYear(new Date())} Jippity</p>
-        </aside>
+        </>
     );
 }
 

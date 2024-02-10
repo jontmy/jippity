@@ -34,7 +34,6 @@ export const lucia = new Lucia(adapter, {
         },
     },
     getSessionAttributes: (attributes) => {
-        console.log(attributes);
         return {
             provider: attributes.provider,
         };
@@ -65,7 +64,6 @@ export const auth = cache(
         }
 
         const result = await lucia.validateSession(sessionId);
-        console.log(result);
         // Next.js throws when you attempt to set cookie when rendering a page
         try {
             if (result.session && result.session.fresh) {
