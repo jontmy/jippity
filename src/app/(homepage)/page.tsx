@@ -75,6 +75,15 @@ export default function Home() {
                                 System
                             </div>
                             <p className="whitespace-pre-wrap">Please set an API key.</p>
+                            <Button
+                                className="my-2 flex max-w-64 items-center gap-2 bg-zinc-800 hover:bg-zinc-700"
+                                asChild
+                            >
+                                <Link href="/settings">
+                                    <GearIcon />
+                                    Go to settings
+                                </Link>
+                            </Button>
                         </div>
                     )}
                 </ClientOnly>
@@ -88,31 +97,6 @@ export default function Home() {
                 className="absolute bottom-0 flex w-full items-center justify-center px-6 sm:relative sm:px-8"
             >
                 <div className="flex w-full max-w-prose grow gap-2">
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button
-                                    variant="outline"
-                                    className="relative h-10 w-12 shrink-0 dark:bg-zinc-700/50 hover:dark:bg-zinc-700 md:h-9"
-                                    aria-label="Set API key"
-                                    asChild
-                                >
-                                    <Link href="/settings">
-                                        <GearIcon />
-                                        <ClientOnly>
-                                            {!apiKey && (
-                                                <>
-                                                    <span className="absolute -right-1 -top-1 inline-flex h-3 w-3 animate-ping rounded-full bg-sky-400 opacity-75" />
-                                                    <span className="absolute -right-1 -top-1 inline-flex h-3 w-3 rounded-full bg-sky-500" />
-                                                </>
-                                            )}
-                                        </ClientOnly>
-                                    </Link>
-                                </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>Settings</TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
                     <ClientOnly fallback={<Skeleton className="h-10 w-full md:h-9" />}>
                         <Input
                             value={input}

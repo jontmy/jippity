@@ -11,6 +11,7 @@ import { Sidebar } from "@/components/shell/sidebar";
 import { Navbar } from "@/components/shell/navbar";
 import { Toaster } from "@/components/ui/sonner";
 import { Main } from "@/components/shell/main";
+import NextTopLoader from "nextjs-toploader";
 
 export const runtime = "edge";
 
@@ -93,6 +94,13 @@ export default function RootLayout(props: Readonly<PropsWithChildren>) {
                     enableSystem
                     disableTransitionOnChange
                 >
+                    <NextTopLoader
+                        color="#ffffff"
+                        height={2}
+                        showSpinner={false}
+                        initialPosition={0.2}
+                        shadow="0 0 10px #ffffff,0 0 5px #ffffff"
+                    />
                     <Navbar />
                     <Sidebar />
                     <Main>{props.children}</Main>

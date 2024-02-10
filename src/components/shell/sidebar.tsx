@@ -6,13 +6,14 @@ import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { GearIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 import { db } from "@/lib/db";
 import { formatDistanceToNow, getYear } from "date-fns";
 import { AES, enc } from "crypto-js";
 import { env } from "@/env";
 import { cn } from "@/lib/utils";
 import { Suspense } from "react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type SidebarProps = {
     contentOnly?: boolean;
@@ -135,7 +136,27 @@ async function SidebarContent() {
             </Show>
             {!user && <div className="grow" />}
             <Separator className="mt-6 bg-zinc-700" />
-            <ModeToggle className="mt-6" />
+            <div className="mt-6 flex justify-between">
+                <ModeToggle />
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button
+                                variant="outline"
+                                className="relative h-10 w-12 shrink-0 border-none bg-zinc-700/50 text-zinc-200 hover:bg-zinc-700 dark:text-zinc-200 md:h-9"
+                                aria-label="Set API key"
+                                asChild
+                            >
+                                <Link href="/settings">
+                                    <GearIcon />
+                                </Link>
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>Settings</TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+            </div>
+
             <nav className="flex flex-col gap-1 pt-6 text-xs text-zinc-400">
                 <Link href="/privacy-policy">Privacy Policy</Link>
                 <Link href="/terms-of-service">Terms of Service</Link>

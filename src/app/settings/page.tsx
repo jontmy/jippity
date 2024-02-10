@@ -1,130 +1,85 @@
-"use client";
-
-import { useLocalStorage, useMediaQuery } from "usehooks-ts";
-import { env } from "@/env";
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from "@/components/ui/dialog";
-import {
-    Drawer,
-    DrawerClose,
-    DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
-} from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
+import dynamic from "next/dynamic";
+import { auth } from "@/lib/auth";
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import { useRouter } from "next/navigation";
-import { ClientOnly } from "@/components/client-only";
+import { type PropsWithChildren } from "react";
 
-export default function Page() {
-    const [apiKey, setApiKey] = useLocalStorage("openai-api-key", "");
-    const [gptModel, setGptModel] = useLocalStorage(
-        "openai-gpt-model",
-        env.NEXT_PUBLIC_OPENAI_GPT_MODELS[0]?.model,
-    );
-    const router = useRouter();
-    const matches = useMediaQuery("(min-width: 768px)");
+const ApiKeyInput = dynamic(
+    async () => {
+        const { ApiKeyInput } = await import("@/app/settings/api-key-input");
+        return ApiKeyInput;
+    },
+    {
+        loading: () => <Skeleton className="h-10 w-full sm:h-9" />,
+        ssr: false,
+    },
+);
 
-    const Modal = matches ? Dialog : Drawer;
-    const ModalContent = matches ? DialogContent : DrawerContent;
-    const ModalHeader = matches ? DialogHeader : DrawerHeader;
-    const ModalTitle = matches ? DialogTitle : DrawerTitle;
-    const ModalDescription = matches ? DialogDescription : DrawerDescription;
-    const ModalFooter = matches ? DialogFooter : DrawerFooter;
-    const ModalClose = matches ? DialogClose : DrawerClose;
+const GptModelSelect = dynamic(
+    async () => {
+        const { GptModelSelect } = await import("@/app/settings/gpt-model-select");
+        return GptModelSelect;
+    },
+    {
+        loading: () => <Skeleton className="h-10 w-48 sm:h-9" />,
+        ssr: false,
+    },
+);
 
+export default async function Page() {
+    const { user, session } = await auth();
     return (
-        <Modal defaultOpen onOpenChange={() => router.back()}>
-            <ModalContent>
-                <ModalHeader>
-                    <ModalTitle>Settings</ModalTitle>
-                </ModalHeader>
-                <div className="flex flex-col gap-8 px-4 py-3 md:px-0">
-                    <ClientOnly>
-                        <div className="flex flex-col">
-                            <Label className="pb-2.5 pl-0.5">OpenAI API Key</Label>
-                            <Input
-                                placeholder="Paste your API key here"
-                                value={apiKey}
-                                onChange={(e) => {
-                                    setApiKey(e.target.value);
-                                    toast.success("Changes saved.");
-                                }}
-                            />
-                            <ModalDescription className="pl-0.5 pt-2.5 text-xs font-medium">
-                                We will never store your API key on our servers.
-                            </ModalDescription>
-                            <ModalDescription className="pl-0.5 pt-1 text-xs">
-                                Your API key is saved in your browser and only used to send your
-                                messages to the OpenAI GPT model.
-                            </ModalDescription>
-                        </div>
-                        <div className="flex flex-col">
-                            <Label className="pb-2.5 pl-0.5">GPT Model</Label>
-                            <Select
-                                defaultValue={gptModel}
-                                onValueChange={(v) => {
-                                    setGptModel(v);
-                                    toast.success("Changes saved.");
-                                }}
-                            >
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Choose a model" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {env.NEXT_PUBLIC_OPENAI_GPT_MODELS.map(({ name, model }) => {
-                                        return (
-                                            <SelectItem value={model} key={model}>
-                                                {name}
-                                            </SelectItem>
-                                        );
-                                    })}
-                                </SelectContent>
-                            </Select>
-                            <ModalDescription className="pl-0.5 pt-2.5 text-xs" rel="noreferrer">
-                                Your choice will be saved for all new and future chats.
-                                <br />
-                                {gptModel?.includes("3.5") && (
-                                    <span>
-                                        GPT-3.5 Turbo is free to use on{" "}
-                                        <a
-                                            href="https://chat.openai.com"
-                                            target="_blank"
-                                            className="underline"
-                                        >
-                                            chat.openai.com
-                                        </a>
-                                        .
-                                    </span>
-                                )}
-                            </ModalDescription>
-                        </div>
-                    </ClientOnly>
+        <div className="flex w-full max-w-prose flex-col gap-4 sm:gap-6">
+            <h1 className="font-brand text-xl font-bold">Settings</h1>
+            <Section>
+                <div className="flex flex-col gap-1.5 py-5">
+                    <Label className="pb-2.5 pl-0.5">OpenAI API Key</Label>
+                    <ApiKeyInput />
+                    <div className="pl-0.5 ">
+                        <p className="pt-2.5 text-xs font-medium text-foreground/80">
+                            We will never store your API key on our servers.
+                        </p>
+                        <p className="pt-1 text-xs text-muted-foreground">
+                            Your API key is saved in your browser and only used to send your
+                            messages to the OpenAI GPT model.
+                        </p>
+                    </div>
                 </div>
-                <ModalFooter>
-                    <ModalClose asChild>
-                        <Button>Close</Button>
-                    </ModalClose>
-                </ModalFooter>
-            </ModalContent>
-        </Modal>
+                <div className="flex flex-col py-5">
+                    <Label className="pb-2.5 pl-0.5">GPT Model</Label>
+                    <GptModelSelect />
+                </div>
+            </Section>
+            {user && (
+                <Section>
+                    <div className="flex flex-col gap-1.5 py-5">
+                        <Label className="pb-2.5 pl-0.5">Username</Label>
+                        <Input
+                            value={user.username}
+                            className="pointer-events-none max-w-48 bg-muted text-muted-foreground dark:bg-zinc-700"
+                            readOnly
+                        />
+                        <div className="pl-0.5 ">
+                            <p className="pt-2.5 text-xs font-medium text-foreground/80">
+                                Your username is based on your {session.provider} account and can't
+                                be changed at the moment.
+                            </p>
+                            <p className="pt-1 text-xs text-muted-foreground">
+                                In future, you will be able to change your username.
+                            </p>
+                        </div>
+                    </div>
+                </Section>
+            )}
+        </div>
+    );
+}
+
+function Section(props: PropsWithChildren) {
+    return (
+        <div className="w-full rounded-xl bg-zinc-200/50 px-6 py-2 shadow-inner dark:bg-zinc-700/50 sm:py-3">
+            {props.children}
+        </div>
     );
 }
