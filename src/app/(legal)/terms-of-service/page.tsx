@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function Page() {
     return (
-        <article className="prose dark:prose-invert py-2">
+        <article className="prose py-2 dark:prose-invert">
             <h1>Terms of Service</h1>
             <h2 className="text-sm text-muted-foreground">Effective as of 01 February 2024</h2>
             <p>
@@ -71,11 +71,11 @@ export default function Page() {
             </p>
             <h3>6. Limitation of Liability</h3>
             <p>
-                6.1 To the fullest extent permitted by law, [Your Company Name] shall not be liable
-                for any indirect, incidental, special, consequential, or punitive damages, or any
-                loss of profits or revenues, whether incurred directly or indirectly, or any loss of
-                data, use, goodwill, or other intangible losses resulting from your access to or use
-                of, or inability to access or use Jippity.
+                6.1 To the fullest extent permitted by law, Jippity shall not be liable for any
+                indirect, incidental, special, consequential, or punitive damages, or any loss of
+                profits or revenues, whether incurred directly or indirectly, or any loss of data,
+                use, goodwill, or other intangible losses resulting from your access to or use of,
+                or inability to access or use Jippity.
             </p>
             <h3>7. Amendment of Terms</h3>
             <p>
