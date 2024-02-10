@@ -5,27 +5,15 @@ import { auth } from "@/lib/auth";
 import { Input } from "@/components/ui/input";
 import { type PropsWithChildren } from "react";
 
-const ApiKeyInput = dynamic(
-    async () => {
-        const { ApiKeyInput } = await import("@/app/settings/api-key-input");
-        return ApiKeyInput;
-    },
-    {
-        loading: () => <Skeleton className="h-10 w-full sm:h-9" />,
-        ssr: false,
-    },
-);
+const ApiKeyInput = dynamic(async () => await import("@/app/settings/api-key-input"), {
+    loading: () => <Skeleton className="h-10 w-full sm:h-9" />,
+    ssr: false,
+});
 
-const GptModelSelect = dynamic(
-    async () => {
-        const { GptModelSelect } = await import("@/app/settings/gpt-model-select");
-        return GptModelSelect;
-    },
-    {
-        loading: () => <Skeleton className="h-10 w-48 sm:h-9" />,
-        ssr: false,
-    },
-);
+const GptModelSelect = dynamic(() => import("@/app/settings/gpt-model-select"), {
+    loading: () => <Skeleton className="h-10 w-48 sm:h-9" />,
+    ssr: false,
+});
 
 export default async function Page() {
     const { user, session } = await auth();

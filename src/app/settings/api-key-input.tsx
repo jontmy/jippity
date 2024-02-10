@@ -4,7 +4,7 @@ import { useLocalStorage } from "usehooks-ts";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
-export function ApiKeyInput() {
+export default function ApiKeyInput() {
     const [apiKey, setApiKey] = useLocalStorage("openai-api-key", "");
     return (
         <Input

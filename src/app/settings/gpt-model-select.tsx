@@ -11,7 +11,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 
-export function GptModelSelect() {
+export default function GptModelSelect() {
     const [gptModel, setGptModel] = useLocalStorage(
         "openai-gpt-model",
         env.NEXT_PUBLIC_OPENAI_GPT_MODELS[0]?.model,
