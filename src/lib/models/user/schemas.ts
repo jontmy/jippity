@@ -13,6 +13,12 @@ export const userTable = mysqlTable("user", {
     username: varchar("username", {
         length: 32,
     }).notNull(),
+    email: varchar("email", {
+        length: 255,
+    }),
+    picture: varchar("picture", {
+        length: 255,
+    }),
     createdAt: datetime("created_at")
         .notNull()
         .default(sql`CURRENT_TIMESTAMP`),

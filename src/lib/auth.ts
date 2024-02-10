@@ -1,7 +1,7 @@
 import "server-only";
 
 import { Lucia, type Session, type User } from "lucia";
-import { GitHub } from "arctic";
+import { GitHub, Google } from "arctic";
 import { DrizzleMySQLAdapter } from "@lucia-auth/adapter-drizzle";
 import { db } from "@/lib/db";
 import { env } from "@/env";
@@ -21,7 +21,6 @@ declare module "lucia" {
 }
 
 type DatabaseUserAttributes = {
-    github_id: number;
     username: string;
 };
 
@@ -35,13 +34,18 @@ export const lucia = new Lucia(adapter, {
     },
     getUserAttributes: (attributes) => {
         return {
-            githubId: attributes.github_id,
             username: attributes.username,
         };
     },
 });
 
 export const github = new GitHub(env.GITHUB_CLIENT_ID, env.GITHUB_CLIENT_SECRET);
+
+export const google = new Google(
+    env.GOOGLE_CLIENT_ID,
+    env.GOOGLE_CLIENT_SECRET,
+    `${env.NEXT_PUBLIC_FRONTEND_URL}/api/auth/google/callback`,
+);
 
 export const auth = cache(
     async (): Promise<{ user: User; session: Session } | { user: null; session: null }> => {
