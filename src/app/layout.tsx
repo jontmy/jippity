@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { PropsWithChildren } from "react";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -74,6 +74,10 @@ export const metadata: Metadata = {
         // https://appsco.pe/developer/splash-screens
         startupImage: "/splashes/iphonexsmax_splash.png",
     },
+};
+
+export const viewport: Viewport = {
+    themeColor: "#18181b",
 };
 
 export default function RootLayout(props: Readonly<PropsWithChildren>) {

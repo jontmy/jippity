@@ -9,7 +9,7 @@ import { env } from "@/env";
 
 export function Navbar() {
     return (
-        <header className="sticky left-0 top-0 z-50 flex h-14 w-screen items-center gap-4 bg-zinc-900/90 px-6 shadow-lg backdrop-blur sm:bg-zinc-950/90">
+        <header className="sticky left-0 top-0 z-50 flex h-14 w-screen items-center gap-4 bg-zinc-950/90 px-6 sm:bg-zinc-900 sm:backdrop-blur">
             <Sheet>
                 <SheetTrigger className="block sm:hidden">
                     <MenuIcon size={22} className="text-white" />
