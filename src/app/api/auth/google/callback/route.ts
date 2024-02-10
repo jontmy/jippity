@@ -54,7 +54,7 @@ export async function GET(request: Request): Promise<Response> {
             .from(accountTable)
             .where(
                 and(
-                    eq(accountTable.provider, "Google"),
+                    eq(accountTable.provider, "google"),
                     eq(accountTable.providerUserId, googleUser.sub),
                 ),
             )
@@ -89,7 +89,7 @@ export async function GET(request: Request): Promise<Response> {
                 picture: googleUser.picture,
             });
             await trx.insert(accountTable).values({
-                provider: "Google",
+                provider: "google",
                 providerUserId: googleUser.sub,
                 userId,
             });

@@ -6,7 +6,7 @@ import { userTable } from "@/lib/models/user/schemas";
 export const accountTable = mysqlTable(
     "account",
     {
-        provider: mysqlEnum("account_provider", ["GitHub", "Google"]).notNull(),
+        provider: mysqlEnum("account_provider", ["github", "google"]).notNull(),
         providerUserId: varchar("github_id", {
             length: 40,
         }).notNull(),

@@ -36,7 +36,7 @@ export async function GET(request: Request): Promise<Response> {
             .from(accountTable)
             .where(
                 and(
-                    eq(accountTable.provider, "GitHub"),
+                    eq(accountTable.provider, "github"),
                     eq(accountTable.providerUserId, githubUser.id),
                 ),
             )
@@ -63,7 +63,7 @@ export async function GET(request: Request): Promise<Response> {
                 username: githubUser.login,
             });
             await trx.insert(accountTable).values({
-                provider: "GitHub",
+                provider: "github",
                 providerUserId: githubUser.id,
                 userId,
             });
