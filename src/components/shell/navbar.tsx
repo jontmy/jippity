@@ -39,7 +39,11 @@ export function Navbar() {
                 variant="ghost"
                 className="cursor-pointer hover:bg-zinc-800"
             >
-                <a href={env.NEXT_PUBLIC_JIPPITY_REPO_URL} target="_blank">
+                <a
+                    href={env.NEXT_PUBLIC_JIPPITY_REPO_URL}
+                    target="_blank"
+                    aria-label="View Jippity's source code on GitHub"
+                >
                     <GitHubLogoIcon className="size-5 text-zinc-100" />
                 </a>
             </Button>

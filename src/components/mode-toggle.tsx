@@ -27,6 +27,7 @@ export function ModeToggle(props: ModeToggleProps) {
                                     "bg-zinc-700/80 hover:bg-zinc-700": theme === "light",
                                     "bg-zinc-800 hover:bg-zinc-700": theme !== "light",
                                 })}
+                                aria-label="Set color scheme to light mode"
                             >
                                 <Sun size={14} />
                             </Button>
@@ -45,6 +46,7 @@ export function ModeToggle(props: ModeToggleProps) {
                                     "bg-zinc-700/80 hover:bg-zinc-700": theme === "dark",
                                     "bg-zinc-800 hover:bg-zinc-700": theme !== "dark",
                                 })}
+                                aria-label="Set color scheme to dark mode"
                             >
                                 <Moon size={14} />
                             </Button>
@@ -63,6 +65,7 @@ export function ModeToggle(props: ModeToggleProps) {
                                     "bg-zinc-700/80 hover:bg-zinc-700": theme === "system",
                                     "bg-zinc-800 hover:bg-zinc-700": theme !== "system",
                                 })}
+                                aria-label="Set color scheme to system theme"
                             >
                                 <Laptop2 size={15} />
                             </Button>
