@@ -23,8 +23,8 @@ export function Sidebar(props: SidebarProps) {
     return (
         <aside
             className={cn({
-                "flex-col sm:flex": true,
-                "fixed left-0 top-0 hidden h-screen w-72 bg-zinc-900 p-4 pb-6 pt-[72px] sm:p-6 sm:pb-8 sm:pt-20":
+                "flex-col bg-zinc-900 sm:flex": true,
+                "fixed left-0 top-0 hidden h-screen w-72 p-4 pb-6 pt-[72px] sm:p-6 sm:pb-8 sm:pt-20":
                     !props.contentOnly,
                 "flex h-full": props.contentOnly,
             })}
@@ -103,6 +103,12 @@ async function SidebarContent() {
                 when={user}
                 fallback={
                     <div className="flex flex-col gap-3 pt-4 text-center">
+                        <Button className="w-full bg-zinc-50 text-zinc-900 hover:bg-zinc-50/90">
+                            <a href="/api/auth/google" className="flex items-center">
+                                <GoogleLogoIcon />
+                                Sign in with Google
+                            </a>
+                        </Button>
                         <Button
                             className="w-full bg-zinc-50 text-zinc-900 hover:bg-zinc-50/90"
                             asChild
@@ -111,15 +117,6 @@ async function SidebarContent() {
                                 <GitHubLogoIcon className="mr-2 inline-block" />
                                 Sign in with GitHub
                             </a>
-                        </Button>
-                        <Button
-                            className="w-full bg-zinc-50 text-zinc-900 hover:bg-zinc-50/90"
-                            disabled
-                        >
-                            {/*<a href="/api/auth/google">*/}
-                            <GoogleLogoIcon />
-                            Sign in with Google (soon)
-                            {/*</a>*/}
                         </Button>
                     </div>
                 }
