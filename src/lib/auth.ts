@@ -91,6 +91,12 @@ export async function signOut() {
     await lucia.invalidateSession(session.id);
     const sessionCookie = lucia.createBlankSessionCookie();
     cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+
+    cookies().delete("github_oauth_state");
+    cookies().delete("google_oauth_state");
+    cookies().delete("google_oauth_code_verifier");
+    cookies().delete("google_oauth_refresh_token");
+
     revalidatePath("/");
     return redirect("/");
 }
