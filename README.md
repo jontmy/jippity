@@ -1,10 +1,11 @@
 # Jippity
 
-![Screen Shot 2024-01-25 at 23 10 09](https://github.com/jontmy/jippity/assets/50949210/9d33c501-9a21-46f3-8906-e42142463a3f)
+![Screen Shot 2024-02-11 at 10 37 12](https://github.com/jontmy/jippity/assets/50949210/a3f2a2bb-39c1-4078-a576-62800ab600ea)
 
 #### What is Jippity?
 
-Jippity is just a frontend made with Next.js for calling the OpenAI API for GPT-4 (and their other GPT models).
+Jippity is a frontend made with Next.js for calling the OpenAI API for GPT-4 (and their other GPT models).
+For privacy, your conversations with Jippity are encrypted at rest.
 
 #### How do I use Jippity?
 
@@ -13,5 +14,5 @@ Jippity only stores your API key in your browser (never remotely!), and your API
 
 #### Why did I create this?
 
-Cuz I'm too cheap to pay 20 USD per month just for access to GPT-4.
+Cuz 20 USD per month is a lil much when I only need GPT-4.
 OpenAI's API lets you pay for your usage of GPT-4 and other models as you go, which ends up being significantly cheaper per month.
