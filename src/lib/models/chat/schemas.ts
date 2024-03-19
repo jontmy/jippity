@@ -1,24 +1,18 @@
-import { char, datetime } from "drizzle-orm/mysql-core";
 import { relations, sql } from "drizzle-orm";
 import { messageTable } from "@/lib/models/message/schemas";
 import { userTable } from "@/lib/models/user/schemas";
-import { generateId, mysqlTable } from "@/lib/models/utils";
+import { generateId, sqliteTable } from "@/lib/models/utils";
+import { text } from "drizzle-orm/sqlite-core";
 
-export const chatTable = mysqlTable("chat", {
-    id: char("id", {
-        length: 16,
-    })
-        .primaryKey()
-        .$defaultFn(generateId),
-    userId: char("user_id", {
-        length: 16,
-    })
+export const chatTable = sqliteTable("chat", {
+    id: text("id").primaryKey().$defaultFn(generateId),
+    userId: text("user_id")
         .notNull()
         .references(() => userTable.id, {
             onDelete: "cascade",
             onUpdate: "cascade",
         }),
-    createdAt: datetime("created_at")
+    createdAt: text("created_at")
         .notNull()
         .default(sql`CURRENT_TIMESTAMP`),
 });

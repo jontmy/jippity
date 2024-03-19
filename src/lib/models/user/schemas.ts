@@ -1,25 +1,17 @@
 import { relations, sql } from "drizzle-orm";
 import { chatTable } from "@/lib/models/chat/schemas";
 import { messageTable } from "@/lib/models/message/schemas";
-import { char, datetime, varchar } from "drizzle-orm/mysql-core";
 import { sessionTable } from "@/lib/models/session/schemas";
-import { mysqlTable } from "@/lib/models/utils";
+import { sqliteTable } from "@/lib/models/utils";
 import { accountTable } from "@/lib/models/account/schemas";
+import { text } from "drizzle-orm/sqlite-core";
 
-export const userTable = mysqlTable("user", {
-    id: char("id", {
-        length: 16,
-    }).primaryKey(),
-    username: varchar("username", {
-        length: 32,
-    }).notNull(),
-    email: varchar("email", {
-        length: 255,
-    }),
-    picture: varchar("picture", {
-        length: 255,
-    }),
-    createdAt: datetime("created_at")
+export const userTable = sqliteTable("user", {
+    id: text("id").primaryKey(),
+    username: text("username").notNull(),
+    email: text("email"),
+    picture: text("picture"),
+    createdAt: text("created_at")
         .notNull()
         .default(sql`CURRENT_TIMESTAMP`),
 });

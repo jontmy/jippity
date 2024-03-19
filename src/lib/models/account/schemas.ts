@@ -1,24 +1,20 @@
 import { relations, sql } from "drizzle-orm";
-import { char, datetime, mysqlEnum, primaryKey, varchar } from "drizzle-orm/mysql-core";
-import { mysqlTable } from "@/lib/models/utils";
+import { sqliteTable } from "@/lib/models/utils";
 import { userTable } from "@/lib/models/user/schemas";
+import { primaryKey, text } from "drizzle-orm/sqlite-core";
 
-export const accountTable = mysqlTable(
+export const accountTable = sqliteTable(
     "account",
     {
-        provider: mysqlEnum("account_provider", ["github", "google"]).notNull(),
-        providerUserId: varchar("github_id", {
-            length: 40,
-        }).notNull(),
-        userId: char("user_id", {
-            length: 16,
-        })
+        provider: text("account_provider", { enum: ["github", "google"] }).notNull(),
+        providerUserId: text("github_id").notNull(),
+        userId: text("user_id")
             .notNull()
             .references(() => userTable.id, {
                 onDelete: "cascade",
                 onUpdate: "cascade",
             }),
-        createdAt: datetime("created_at")
+        createdAt: text("created_at")
             .notNull()
             .default(sql`CURRENT_TIMESTAMP`),
     },

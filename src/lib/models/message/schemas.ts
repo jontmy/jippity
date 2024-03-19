@@ -1,34 +1,26 @@
 import { relations, sql } from "drizzle-orm";
 import { chatTable } from "@/lib/models/chat/schemas";
-import { char, datetime, mysqlEnum, text } from "drizzle-orm/mysql-core";
+import { text } from "drizzle-orm/sqlite-core";
 import { userTable } from "@/lib/models/user/schemas";
-import { generateId, mysqlTable } from "@/lib/models/utils";
+import { generateId, sqliteTable } from "@/lib/models/utils";
 
-export const messageTable = mysqlTable("message", {
-    id: char("id", {
-        length: 16,
-    })
-        .primaryKey()
-        .$defaultFn(generateId),
-    chatId: char("chat_id", {
-        length: 16,
-    })
+export const messageTable = sqliteTable("message", {
+    id: text("id").primaryKey().$defaultFn(generateId),
+    chatId: text("chat_id")
         .notNull()
         .references(() => chatTable.id, {
             onDelete: "cascade",
             onUpdate: "cascade",
         }),
-    userId: char("user_id", {
-        length: 16,
-    })
+    userId: text("user_id")
         .notNull()
         .references(() => userTable.id, {
             onDelete: "cascade",
             onUpdate: "cascade",
         }),
     content: text("content").notNull(),
-    role: mysqlEnum("message_role", ["user", "assistant"]).notNull(),
-    createdAt: datetime("created_at")
+    role: text("message_role", { enum: ["user", "assistant"] }).notNull(),
+    createdAt: text("created_at")
         .notNull()
         .default(sql`CURRENT_TIMESTAMP`),
 });

@@ -2,7 +2,7 @@ import "server-only";
 
 import { Lucia, type Session, type User } from "lucia";
 import { GitHub, Google } from "arctic";
-import { DrizzleMySQLAdapter } from "@lucia-auth/adapter-drizzle";
+import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
 import { db } from "@/lib/db";
 import { env } from "@/env";
 import { cache } from "react";
@@ -25,7 +25,7 @@ declare module "lucia" {
     }
 }
 
-const adapter = new DrizzleMySQLAdapter(db, sessionTable, userTable);
+const adapter = new DrizzleSQLiteAdapter(db, sessionTable, userTable);
 export const lucia = new Lucia(adapter, {
     sessionCookie: {
         expires: false,

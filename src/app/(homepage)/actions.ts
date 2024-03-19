@@ -26,17 +26,18 @@ export async function createMessage(input: CreateMessageInput) {
     }
     const ciphertext = AES.encrypt(content, env.ENCRYPTION_KEY).toString();
     await db.transaction(async (trx) => {
-        await trx.insert(chatTable).ignore().values({
-            id: chatId,
-            userId: user.id,
-            createdAt: new Date(),
-        });
+        await trx
+            .insert(chatTable)
+            .values({
+                id: chatId,
+                userId: user.id,
+            })
+            .onConflictDoNothing();
         await trx.insert(messageTable).values({
             chatId,
             userId: user.id,
             content: ciphertext,
             role,
-            createdAt: new Date(),
         });
     });
     revalidatePath("/");

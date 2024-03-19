@@ -3,9 +3,10 @@ import { env } from "@/env";
 
 export default defineConfig({
     schema: "./src/lib/models/**/schemas.ts",
-    driver: "mysql2",
+    driver: "turso",
     dbCredentials: {
-        uri: env.DATABASE_URL,
+        url: env.DATABASE_URL,
+        authToken: env.DATABASE_TOKEN,
     },
     verbose: true,
     strict: true,

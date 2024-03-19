@@ -1,22 +1,18 @@
 import { relations } from "drizzle-orm";
 import { userTable } from "@/lib/models/user/schemas";
-import { char, datetime, mysqlEnum, varchar } from "drizzle-orm/mysql-core";
-import { mysqlTable } from "@/lib/models/utils";
+import { sqliteTable } from "@/lib/models/utils";
+import { integer, text } from "drizzle-orm/sqlite-core";
 
-export const sessionTable = mysqlTable("session", {
-    id: varchar("id", {
-        length: 40,
-    }).primaryKey(),
-    userId: char("user_id", {
-        length: 16,
-    })
+export const sessionTable = sqliteTable("session", {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
         .notNull()
         .references(() => userTable.id, {
             onDelete: "cascade",
             onUpdate: "cascade",
         }),
-    provider: mysqlEnum("provider", ["GitHub", "Google"]).notNull(),
-    expiresAt: datetime("expires_at").notNull(),
+    provider: text("provider", { enum: ["GitHub", "Google"] }).notNull(),
+    expiresAt: integer("expires_at").notNull(),
 });
 
 export const sessionRelations = relations(sessionTable, ({ one }) => ({
