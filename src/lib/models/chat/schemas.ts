@@ -1,10 +1,10 @@
-import { char, datetime } from "drizzle-orm/mysql-core";
+import { char, timestamp } from "drizzle-orm/pg-core";
 import { relations, sql } from "drizzle-orm";
 import { messageTable } from "@/lib/models/message/schemas";
 import { userTable } from "@/lib/models/user/schemas";
-import { generateId, mysqlTable } from "@/lib/models/utils";
+import { generateId, table } from "@/lib/models/utils";
 
-export const chatTable = mysqlTable("chat", {
+export const chatTable = table("chat", {
     id: char("id", {
         length: 16,
     })
@@ -18,7 +18,7 @@ export const chatTable = mysqlTable("chat", {
             onDelete: "cascade",
             onUpdate: "cascade",
         }),
-    createdAt: datetime("created_at")
+    createdAt: timestamp("created_at")
         .notNull()
         .default(sql`CURRENT_TIMESTAMP`),
 });

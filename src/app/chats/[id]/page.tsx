@@ -29,7 +29,7 @@ export default async function Page({ params }: PageProps) {
     }
     const decrypted = messages.map((m) => ({
         ...m,
-        content: AES.decrypt(m.content, env.ENCRYPTION_KEY).toString(enc.Utf8),
+        content: AES.decrypt(m.content, env.DATABASE_ENCRYPTION_KEY).toString(enc.Utf8),
     }));
     return (
         <div className="flex w-full max-w-prose flex-col gap-6">

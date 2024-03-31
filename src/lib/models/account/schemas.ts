@@ -1,12 +1,12 @@
 import { relations, sql } from "drizzle-orm";
-import { char, datetime, mysqlEnum, primaryKey, varchar } from "drizzle-orm/mysql-core";
-import { mysqlTable } from "@/lib/models/utils";
+import { char, primaryKey, timestamp, varchar } from "drizzle-orm/pg-core";
+import { table } from "@/lib/models/utils";
 import { userTable } from "@/lib/models/user/schemas";
 
-export const accountTable = mysqlTable(
+export const accountTable = table(
     "account",
     {
-        provider: mysqlEnum("account_provider", ["github", "google"]).notNull(),
+        provider: varchar("account_provider", { enum: ["github", "google"] }).notNull(),
         providerUserId: varchar("github_id", {
             length: 40,
         }).notNull(),
@@ -18,7 +18,7 @@ export const accountTable = mysqlTable(
                 onDelete: "cascade",
                 onUpdate: "cascade",
             }),
-        createdAt: datetime("created_at")
+        createdAt: timestamp("created_at")
             .notNull()
             .default(sql`CURRENT_TIMESTAMP`),
     },

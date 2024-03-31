@@ -1,12 +1,12 @@
 import { relations, sql } from "drizzle-orm";
 import { chatTable } from "@/lib/models/chat/schemas";
 import { messageTable } from "@/lib/models/message/schemas";
-import { char, datetime, varchar } from "drizzle-orm/mysql-core";
+import { char, timestamp, varchar } from "drizzle-orm/pg-core";
 import { sessionTable } from "@/lib/models/session/schemas";
-import { mysqlTable } from "@/lib/models/utils";
+import { table } from "@/lib/models/utils";
 import { accountTable } from "@/lib/models/account/schemas";
 
-export const userTable = mysqlTable("user", {
+export const userTable = table("user", {
     id: char("id", {
         length: 16,
     }).primaryKey(),
@@ -19,7 +19,7 @@ export const userTable = mysqlTable("user", {
     picture: varchar("picture", {
         length: 255,
     }),
-    createdAt: datetime("created_at")
+    createdAt: timestamp("created_at")
         .notNull()
         .default(sql`CURRENT_TIMESTAMP`),
 });

@@ -3,12 +3,8 @@ import { z } from "zod";
 
 export const env = createEnv({
     server: {
-        DATABASE_NAME: z.string().min(1),
-        DATABASE_HOST: z.string().min(1),
-        DATABASE_USERNAME: z.string().min(1),
-        DATABASE_PASSWORD: z.string().min(1),
         DATABASE_URL: z.string().min(1),
-        ENCRYPTION_KEY: z.string().length(128),
+        DATABASE_ENCRYPTION_KEY: z.string().length(128),
         GITHUB_CLIENT_ID: z.string().min(1),
         GITHUB_CLIENT_SECRET: z.string().min(1),
         GOOGLE_CLIENT_ID: z.string().min(1),
@@ -32,12 +28,8 @@ export const env = createEnv({
             ),
     },
     runtimeEnv: {
-        DATABASE_NAME: process.env.DATABASE_NAME,
-        DATABASE_HOST: process.env.DATABASE_HOST,
-        DATABASE_USERNAME: process.env.DATABASE_USERNAME,
-        DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
         DATABASE_URL: process.env.DATABASE_URL,
-        ENCRYPTION_KEY: process.env.ENCRYPTION_KEY,
+        DATABASE_ENCRYPTION_KEY: process.env.DATABASE_ENCRYPTION_KEY,
         GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
         GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
