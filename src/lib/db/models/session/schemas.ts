@@ -1,6 +1,6 @@
 import { relations } from "drizzle-orm";
-import { userTable } from "@/lib/models/user/schemas";
-import { table } from "@/lib/models/utils";
+import { userTable } from "@/lib/db/models/user/schemas";
+import { table } from "@/lib/db/models/utils";
 import { char, timestamp, varchar } from "drizzle-orm/pg-core";
 
 export const sessionTable = table("session", {

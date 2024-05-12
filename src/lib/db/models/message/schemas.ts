@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
-import { chatTable } from "@/lib/models/chat/schemas";
-import { userTable } from "@/lib/models/user/schemas";
-import { generateId, table } from "@/lib/models/utils";
+import { chatTable } from "@/lib/db/models/chat/schemas";
+import { userTable } from "@/lib/db/models/user/schemas";
+import { generateId, table } from "@/lib/db/models/utils";
 import { char, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 export const messageTable = table("message", {

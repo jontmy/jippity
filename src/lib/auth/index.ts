@@ -9,8 +9,8 @@ import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { userTable } from "@/lib/models/user/schemas";
-import { sessionTable } from "@/lib/models/session/schemas";
+import { userTable } from "@/lib/db/models/user/schemas";
+import { sessionTable } from "@/lib/db/models/session/schemas";
 
 declare module "lucia" {
     // eslint-disable-next-line @typescript-eslint/consistent-type-definitions

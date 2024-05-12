@@ -3,9 +3,9 @@ import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
 import { db } from "@/lib/db";
 import { and, eq } from "drizzle-orm";
-import { userTable } from "@/lib/models/user/schemas";
-import { generateId } from "@/lib/models/utils";
-import { accountTable } from "@/lib/models/account/schemas";
+import { userTable } from "@/lib/db/models/user/schemas";
+import { generateId } from "@/lib/db/models/utils";
+import { accountTable } from "@/lib/db/models/account/schemas";
 
 type GoogleUser = {
     sub: string;

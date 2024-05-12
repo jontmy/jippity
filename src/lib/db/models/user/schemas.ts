@@ -1,9 +1,9 @@
 import { relations } from "drizzle-orm";
-import { chatTable } from "@/lib/models/chat/schemas";
-import { messageTable } from "@/lib/models/message/schemas";
-import { sessionTable } from "@/lib/models/session/schemas";
-import { table } from "@/lib/models/utils";
-import { accountTable } from "@/lib/models/account/schemas";
+import { chatTable } from "@/lib/db/models/chat/schemas";
+import { messageTable } from "@/lib/db/models/message/schemas";
+import { sessionTable } from "@/lib/db/models/session/schemas";
+import { table } from "@/lib/db/models/utils";
+import { accountTable } from "@/lib/db/models/account/schemas";
 import { char, timestamp, varchar } from "drizzle-orm/pg-core";
 
 export const userTable = table("user", {
