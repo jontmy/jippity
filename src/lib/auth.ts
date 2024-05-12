@@ -66,7 +66,7 @@ export const auth = cache(
         const result = await lucia.validateSession(sessionId);
         // Next.js throws when you attempt to set cookie when rendering a page
         try {
-            if (result.session && result.session.fresh) {
+            if (result.session?.fresh) {
                 const sessionCookie = lucia.createSessionCookie(result.session.id);
                 cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
             }

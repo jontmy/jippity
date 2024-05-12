@@ -15,8 +15,6 @@ type GoogleUser = {
 };
 
 export async function GET(request: Request): Promise<Response> {
-    console.log("GET /api/auth/google/callback");
-    
     const url = new URL(request.url);
     const code = url.searchParams.get("code");
     const state = url.searchParams.get("state");
