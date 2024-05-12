@@ -53,7 +53,7 @@ async function SidebarContent() {
         ...c,
         messages: c.messages.map((m) => ({
             ...m,
-            content: AES.decrypt(m.content, env.ENCRYPTION_KEY).toString(enc.Utf8),
+            content: AES.decrypt(m.content, env.DATABASE_ENCRYPTION_KEY).toString(enc.Utf8),
         })),
     }));
 

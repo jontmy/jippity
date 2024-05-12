@@ -1,4 +1,4 @@
-import { relations, sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import { table } from "@/lib/models/utils";
 import { userTable } from "@/lib/models/user/schemas";
 import { char, primaryKey, timestamp, varchar } from "drizzle-orm/pg-core";

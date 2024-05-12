@@ -24,13 +24,13 @@ export async function createMessage(input: CreateMessageInput) {
     if (!user) {
         return chatId;
     }
-    const ciphertext = AES.encrypt(content, env.ENCRYPTION_KEY).toString();
+    const ciphertext = AES.encrypt(content, env.DATABASE_ENCRYPTION_KEY).toString();
     await db.transaction(async (trx) => {
-        await trx.insert(chatTable).ignore().values({
+        await trx.insert(chatTable).values({
             id: chatId,
             userId: user.id,
             createdAt: new Date(),
-        });
+        }).onConflictDoNothing();
         await trx.insert(messageTable).values({
             chatId,
             userId: user.id,

@@ -3,8 +3,6 @@ import { OpenAIStream, StreamingTextResponse } from "ai";
 import { createMessage } from "@/app/(homepage)/actions";
 import { z } from "zod";
 
-export const runtime = "edge";
-
 const RequestSchema = z.object({
     messages: z
         .object({

@@ -13,8 +13,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { Main } from "@/components/shell/main";
 import NextTopLoader from "nextjs-toploader";
 
-export const runtime = "edge";
-
 const satoshi = localFont({
     src: [
         {

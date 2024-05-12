@@ -1,4 +1,4 @@
-import { relations, sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import { chatTable } from "@/lib/models/chat/schemas";
 import { messageTable } from "@/lib/models/message/schemas";
 import { sessionTable } from "@/lib/models/session/schemas";
